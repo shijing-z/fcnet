@@ -42,8 +42,7 @@ single-ROI-to-network connectivity.
 The overall \code{between_network} average (when \code{pairwise = FALSE})
 uses raw cell average: all between-network connections are pooled and
 averaged with equal weight per cell. This means larger network pairs
-contribute proportionally more than smaller pairs. This matches the
-original processing scripts.
+contribute proportionally more than smaller pairs.
 
 Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
 }

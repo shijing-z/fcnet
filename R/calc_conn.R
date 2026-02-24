@@ -123,18 +123,17 @@ calc_conn <- function(conn_array, indices, from, to) {
   n_subjects <- dim(conn_array)[3]
   from_idx <- indices[[from]]
 
-  result <- purrr::map_dfc(to, function(target) {
+  result_list <- purrr::map(to, function(target) {
     to_idx <- indices[[target]]
 
-    connectivity <- purrr::map_dbl(seq_len(n_subjects), function(subj) {
+    purrr::map_dbl(seq_len(n_subjects), function(subj) {
       connections <- conn_array[from_idx, to_idx, subj]
       mean(connections, na.rm = TRUE)
     })
-
-    return(connectivity)
   })
 
-  colnames(result) <- paste(from, to, sep = "_")
+  names(result_list) <- paste(from, to, sep = "_")
+  result <- data.frame(result_list)
 
   return(result)
 }

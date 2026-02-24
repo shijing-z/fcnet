@@ -31,8 +31,7 @@
 #' The overall \code{between_network} average (when \code{pairwise = FALSE})
 #' uses raw cell average: all between-network connections are pooled and
 #' averaged with equal weight per cell. This means larger network pairs
-#' contribute proportionally more than smaller pairs. This matches the
-#' original processing scripts.
+#' contribute proportionally more than smaller pairs.
 #'
 #' Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
 #'
@@ -63,7 +62,6 @@
 #' @export
 
 calc_between <- function(conn_array, indices, pairwise = FALSE) {
-
   # --- Input validation ---
   if (!is.array(conn_array) || length(dim(conn_array)) != 3) {
     stop(
@@ -92,7 +90,8 @@ calc_between <- function(conn_array, indices, pairwise = FALSE) {
   if (length(small_entries) > 0) {
     warning(
       "Dropped entries with fewer than 2 ROIs: ",
-      paste(small_entries, collapse = ", "), ". ",
+      paste(small_entries, collapse = ", "),
+      ". ",
       "These are not suitable for network-level calculation. ",
       "Use calc_conn() for ROI-level connectivity.",
       call. = FALSE
@@ -123,10 +122,13 @@ calc_between <- function(conn_array, indices, pairwise = FALSE) {
         net1_idx <- indices[[net1]]
         net2_idx <- indices[[net2]]
 
-        pair_connectivity <- purrr::map_dbl(seq_len(n_subjects), function(subj) {
-          between_connections <- conn_array[net1_idx, net2_idx, subj]
-          mean(between_connections, na.rm = TRUE)
-        })
+        pair_connectivity <- purrr::map_dbl(
+          seq_len(n_subjects),
+          function(subj) {
+            between_connections <- conn_array[net1_idx, net2_idx, subj]
+            mean(between_connections, na.rm = TRUE)
+          }
+        )
 
         col_name <- paste(net1, net2, sep = "_")
         pairwise_conn[[col_name]] <- pair_connectivity
@@ -134,22 +136,20 @@ calc_between <- function(conn_array, indices, pairwise = FALSE) {
     }
 
     return(pairwise_conn)
-
   } else {
     # --- Per-network mode: each network vs. all others ---
-    between_network <- purrr::map_dfc(network_names, function(target_net) {
+    between_list <- purrr::map(network_names, function(target_net) {
       target_idx <- indices[[target_net]]
       other_idx <- unlist(indices[network_names != target_net])
 
-      between_strength <- purrr::map_dbl(seq_len(n_subjects), function(subj) {
+      purrr::map_dbl(seq_len(n_subjects), function(subj) {
         between_connections <- conn_array[target_idx, other_idx, subj]
         mean(between_connections, na.rm = TRUE)
       })
-
-      return(between_strength)
     })
 
-    colnames(between_network) <- paste0("between_", network_names)
+    names(between_list) <- paste0("between_", network_names)
+    between_network <- data.frame(between_list)
 
     # --- Overall between-network average (raw cell average) ---
     between_avg <- purrr::map_dbl(seq_len(n_subjects), function(subj) {

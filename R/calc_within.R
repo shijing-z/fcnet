@@ -91,19 +91,18 @@ calc_within <- function(conn_array, indices) {
   n_subjects <- dim(conn_array)[3]
   network_names <- names(indices)
 
-  within_network <- purrr::map_dfc(network_names, function(net) {
+  within_list <- purrr::map(network_names, function(net) {
     net_idx <- indices[[net]]
 
-    within_strength <- purrr::map_dbl(seq_len(n_subjects), function(subj) {
+    purrr::map_dbl(seq_len(n_subjects), function(subj) {
       net_matrix <- conn_array[net_idx, net_idx, subj]
       upper_tri <- net_matrix[upper.tri(net_matrix)]
       mean(upper_tri, na.rm = TRUE)
     })
-
-    return(within_strength)
   })
 
-  colnames(within_network) <- paste0("within_", network_names)
+  names(within_list) <- paste0("within_", network_names)
+  within_network <- data.frame(within_list)
 
   # --- Add overall within-network average ---
   within_network$within_network <- rowMeans(
