@@ -50,3 +50,4 @@ rsconnect/
 
 # MacOS
 .DS_Store
+tests/.DS_Store
