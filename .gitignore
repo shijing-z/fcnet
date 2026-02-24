@@ -51,3 +51,6 @@ rsconnect/
 # MacOS
 .DS_Store
 tests/.DS_Store
+
+# Other files
+data-raw/test_conn.mat
