@@ -112,7 +112,7 @@ test_that("load_matrices rmat values are correlations", {
 
 test_that("load_matrices errors with non-existent file", {
   expect_error(
-    load_matrices("definitely_not_a_file.mat", type = "rmat"),
+    suppressWarnings(load_matrices("definitely_not_a_file.mat", type = "rmat")),
     "cannot open|does not exist"
   )
 })
