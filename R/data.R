@@ -1,3 +1,4 @@
+
 #' Example ROI Names from Schaefer Atlas
 #'
 #' A character vector containing 30 example ROI names from the Schaefer 100
@@ -17,9 +18,9 @@
 #' }
 #'
 #' @examples
-#' head(example_roi_names)
-#' length(example_roi_names)
-"example_roi_names"
+#' head(ex_roi_names)
+#' length(ex_roi_names)
+"ex_roi_names"
 
 #' Example Connectivity Array
 #'
@@ -33,19 +34,19 @@
 #'   \item{Dimension 3}{Subject}
 #' }
 #'
-#' Dimnames include ROI names (from example_roi_names) and subject IDs.
+#' Dimnames include ROI names (from ex_roi_names) and subject IDs.
 #'
 #' @examples
-#' dim(example_conn_array)
-#' dimnames(example_conn_array)[[1]]  # ROI names
+#' dim(ex_conn_array)
+#' dimnames(ex_conn_array)[[1]]  # ROI names
 #'
 #' # Access connectivity for first subject
-#' example_conn_array[, , 1]
-"example_conn_array"
+#' ex_conn_array[, , 1]
+"ex_conn_array"
 
 #' Example Network Indices
 #'
-#' Pre-computed network indices for the example_conn_array dataset.
+#' Pre-computed network indices for the ex_conn_array dataset.
 #' Shows which ROI positions belong to each functional network.
 #'
 #' @format A named list where each element contains integer indices:
@@ -62,6 +63,6 @@
 #' }
 #'
 #' @examples
-#' names(example_network_indices)
-#' example_network_indices$vis
-"example_network_indices"
+#' names(ex_indices)
+#' ex_indices$vis
+"ex_indices"
