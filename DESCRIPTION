@@ -1,4 +1,4 @@
-Package: fconn
+Package: fcnet
 Title: Functional Connectivity Analysis Tools for fMRI Data
 Version: 0.1.0
 Authors@R: 

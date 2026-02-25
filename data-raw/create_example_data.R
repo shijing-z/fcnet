@@ -1,4 +1,4 @@
-## Create Example Data for fconn Package
+## Create Example Data for fcnet Package
 ## This script creates small example datasets for documentation and testing
 ## Run this script and then use usethis::use_data() to add to package
 

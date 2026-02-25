@@ -251,25 +251,25 @@ test_that("get_indices with schaefer only returns correct count", {
 
 test_that("prettify_network_names distinguishes limbic from limbic+suffix", {
   # 7-network: "limbic" should stay lowercase
-  expect_equal(fconn:::prettify_network_names("limbic"), "limbic")
+  expect_equal(fcnet:::prettify_network_names("limbic"), "limbic")
 
   # 17-network: subnetworks should get uppercase letters
-  expect_equal(fconn:::prettify_network_names("limbica"), "limbicA")
-  expect_equal(fconn:::prettify_network_names("limbicb"), "limbicB")
+  expect_equal(fcnet:::prettify_network_names("limbica"), "limbicA")
+  expect_equal(fcnet:::prettify_network_names("limbicb"), "limbicB")
 })
 
 test_that("prettify_network_names handles 17-network subnetworks correctly", {
   # Test various 17-network subnetworks
-  expect_equal(fconn:::prettify_network_names("defaulta"), "defaultA")
-  expect_equal(fconn:::prettify_network_names("defaultb"), "defaultB")
-  expect_equal(fconn:::prettify_network_names("contb"), "contB")
-  expect_equal(fconn:::prettify_network_names("contc"), "contC")
-  expect_equal(fconn:::prettify_network_names("sommota"), "sommotA")
+  expect_equal(fcnet:::prettify_network_names("defaulta"), "defaultA")
+  expect_equal(fcnet:::prettify_network_names("defaultb"), "defaultB")
+  expect_equal(fcnet:::prettify_network_names("contb"), "contB")
+  expect_equal(fcnet:::prettify_network_names("contc"), "contC")
+  expect_equal(fcnet:::prettify_network_names("sommota"), "sommotA")
 
   # 7-network names without suffixes should stay lowercase
-  expect_equal(fconn:::prettify_network_names("default"), "default")
-  expect_equal(fconn:::prettify_network_names("cont"), "cont")
-  expect_equal(fconn:::prettify_network_names("sommot"), "sommot")
+  expect_equal(fcnet:::prettify_network_names("default"), "default")
+  expect_equal(fcnet:::prettify_network_names("cont"), "cont")
+  expect_equal(fcnet:::prettify_network_names("sommot"), "sommot")
 })
 
 test_that("get_indices works with 17-network style ROI names", {

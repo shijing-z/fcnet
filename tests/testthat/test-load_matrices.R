@@ -44,7 +44,7 @@ test_that("load_matrices works with rmat type", {
   skip("Requires real .mat file - implement when available")
 
   # Example of how to test with real file:
-  # test_file <- system.file("extdata", "test_conn.mat", package = "fconn")
+  # test_file <- system.file("extdata", "test_conn.mat", package = "fcnet")
   # skip_if(test_file == "", "Test .mat file not available")
   #
   # result <- load_matrices(test_file, type = "rmat")
@@ -134,7 +134,7 @@ test_that("load_matrices validates exclude parameter", {
   skip("Requires test .mat file")
 
   # Example tests for exclude parameter:
-  # test_file <- system.file("extdata", "test_conn.mat", package = "fconn")
+  # test_file <- system.file("extdata", "test_conn.mat", package = "fcnet")
   #
   # # Should error with non-numeric exclude
   # expect_error(
