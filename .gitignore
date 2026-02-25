@@ -52,5 +52,5 @@ rsconnect/
 .DS_Store
 tests/.DS_Store
 
-# Other files
+# Internal testing files
 data-raw/test_conn.mat
