@@ -26,15 +26,15 @@ correlation-based (rmat) or Fisher z-transformed (zmat) connectivity matrices.
 }
 \examples{
 # Example connectivity array
-dim(example_conn_array)
-dimnames(example_conn_array)[[1]]
+dim(ex_conn_array)
+dimnames(ex_conn_array)[[1]]
 
 # Use with get_indices()
-indices <- get_indices(example_conn_array)
+indices <- get_indices(ex_conn_array)
 names(indices)
 
 # Extract specific network connectivity
-vis_connectivity <- example_conn_array[indices$vis, indices$vis, ]
+vis_connectivity <- ex_conn_array[indices$vis, indices$vis, ]
 dim(vis_connectivity)
 
 \dontrun{
@@ -62,5 +62,5 @@ vis_connectivity <- r_mat[indices$vis, indices$vis, ]
 }
 \seealso{
 \code{\link{get_indices}} for extracting network indices from the loaded matrices.
-\code{\link{example_conn_array}} for example data included in the package.
+\code{\link{ex_conn_array}} for example data included in the package.
 }

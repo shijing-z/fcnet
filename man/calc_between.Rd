@@ -48,12 +48,12 @@ Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
 }
 \examples{
 # Per-network between-network averages
-indices <- get_indices(example_conn_array, roi_include = "schaefer")
-between <- calc_between(example_conn_array, indices)
+indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+between <- calc_between(ex_conn_array, indices)
 head(between)
 
 # All pairwise combinations
-pairwise <- calc_between(example_conn_array, indices, pairwise = TRUE)
+pairwise <- calc_between(ex_conn_array, indices, pairwise = TRUE)
 head(pairwise)
 
 \dontrun{
