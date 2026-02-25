@@ -18,7 +18,7 @@ test_that("calc_within has required parameters", {
 # ==============================================================================
 
 test_that("calc_within errors with non-3D array", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   # 2D matrix
   expect_error(
@@ -36,13 +36,13 @@ test_that("calc_within errors with non-3D array", {
 test_that("calc_within errors with invalid indices", {
   # Unnamed list
   expect_error(
-    calc_within(example_conn_array, list(1:5, 6:10)),
+    calc_within(ex_conn_array, list(1:5, 6:10)),
     "named list"
   )
 
   # Not a list
   expect_error(
-    calc_within(example_conn_array, c(1, 2, 3)),
+    calc_within(ex_conn_array, c(1, 2, 3)),
     "named list"
   )
 })
@@ -52,11 +52,11 @@ test_that("calc_within errors with invalid indices", {
 # ==============================================================================
 
 test_that("calc_within warns and drops entries with fewer than 2 ROIs", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   # Full indices include ahip (1 ROI) and phip (1 ROI)
   expect_warning(
-    result <- calc_within(example_conn_array, indices),
+    result <- calc_within(ex_conn_array, indices),
     "Dropped entries with fewer than 2 ROIs"
   )
 
@@ -66,28 +66,28 @@ test_that("calc_within warns and drops entries with fewer than 2 ROIs", {
 })
 
 test_that("calc_within warning mentions dropped entry names", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_warning(
-    calc_within(example_conn_array, indices),
+    calc_within(ex_conn_array, indices),
     "ahip"
   )
 })
 
 test_that("calc_within warning suggests calc_conn", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_warning(
-    calc_within(example_conn_array, indices),
+    calc_within(ex_conn_array, indices),
     "calc_conn"
   )
 })
 
 test_that("calc_within runs without warning when all entries have 2+ ROIs", {
-  indices <- get_indices(example_conn_array, roi_include = "schaefer")
+  indices <- get_indices(ex_conn_array, roi_include = "schaefer")
 
   expect_no_warning(
-    calc_within(example_conn_array, indices)
+    calc_within(ex_conn_array, indices)
   )
 })
 
@@ -95,7 +95,7 @@ test_that("calc_within errors when no entries have 2+ ROIs", {
   single_roi_indices <- list(ahip = 29L, phip = 30L)
 
   expect_error(
-    suppressWarnings(calc_within(example_conn_array, single_roi_indices)),
+    suppressWarnings(calc_within(ex_conn_array, single_roi_indices)),
     "No entries with 2 or more ROIs"
   )
 })
@@ -105,13 +105,13 @@ test_that("calc_within errors when no entries have 2+ ROIs", {
 # ==============================================================================
 
 test_that("calc_within returns data frame with correct structure", {
-  indices <- get_indices(example_conn_array, roi_include = "schaefer")
-  result <- calc_within(example_conn_array, indices)
+  indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+  result <- calc_within(ex_conn_array, indices)
 
   expect_true(is.data.frame(result))
 
   # One row per subject
-  expect_equal(nrow(result), dim(example_conn_array)[3])
+  expect_equal(nrow(result), dim(ex_conn_array)[3])
 
   # One column per network + within_network average
   network_names <- names(indices)
@@ -120,8 +120,8 @@ test_that("calc_within returns data frame with correct structure", {
 })
 
 test_that("calc_within column names have within_ prefix", {
-  indices <- get_indices(example_conn_array, roi_include = "schaefer")
-  result <- calc_within(example_conn_array, indices)
+  indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+  result <- calc_within(ex_conn_array, indices)
 
   # All columns except within_network should have within_ prefix
   network_cols <- setdiff(colnames(result), "within_network")
@@ -129,8 +129,8 @@ test_that("calc_within column names have within_ prefix", {
 })
 
 test_that("calc_within returns numeric values", {
-  indices <- get_indices(example_conn_array, roi_include = "schaefer")
-  result <- calc_within(example_conn_array, indices)
+  indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+  result <- calc_within(ex_conn_array, indices)
 
   expect_true(all(sapply(result, is.numeric)))
 })
@@ -140,33 +140,33 @@ test_that("calc_within returns numeric values", {
 # ==============================================================================
 
 test_that("calc_within computes upper triangle mean correctly", {
-  indices <- get_indices(example_conn_array, roi_include = "schaefer")
-  result <- calc_within(example_conn_array, indices)
+  indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+  result <- calc_within(ex_conn_array, indices)
 
   # Manual calculation for visual network, subject 1
   vis_idx <- indices$vis
-  vis_matrix <- example_conn_array[vis_idx, vis_idx, 1]
+  vis_matrix <- ex_conn_array[vis_idx, vis_idx, 1]
   expected_vis <- mean(vis_matrix[upper.tri(vis_matrix)])
 
   expect_equal(result$within_vis[1], expected_vis)
 })
 
 test_that("calc_within computes correctly for multiple networks", {
-  indices <- get_indices(example_conn_array, roi_include = "schaefer")
-  result <- calc_within(example_conn_array, indices)
+  indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+  result <- calc_within(ex_conn_array, indices)
 
   # Manual calculation for default network, last subject
-  n_subj <- dim(example_conn_array)[3]
+  n_subj <- dim(ex_conn_array)[3]
   def_idx <- indices$default
-  def_matrix <- example_conn_array[def_idx, def_idx, n_subj]
+  def_matrix <- ex_conn_array[def_idx, def_idx, n_subj]
   expected_default <- mean(def_matrix[upper.tri(def_matrix)])
 
   expect_equal(result$within_default[n_subj], expected_default)
 })
 
 test_that("calc_within within_network is mean of per-network columns", {
-  indices <- get_indices(example_conn_array, roi_include = "schaefer")
-  result <- calc_within(example_conn_array, indices)
+  indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+  result <- calc_within(ex_conn_array, indices)
 
   network_cols <- paste0("within_", names(indices))
   expected_avg <- rowMeans(result[, network_cols])
@@ -179,7 +179,7 @@ test_that("calc_within within_network is mean of per-network columns", {
 # ==============================================================================
 
 test_that("calc_within works with single subject", {
-  single_subj <- example_conn_array[, , 1, drop = FALSE]
+  single_subj <- ex_conn_array[, , 1, drop = FALSE]
   indices <- get_indices(single_subj, roi_include = "schaefer")
 
   result <- calc_within(single_subj, indices)
@@ -190,11 +190,11 @@ test_that("calc_within works with single subject", {
 
 test_that("calc_within works with two networks", {
   two_net_indices <- list(
-    vis = get_indices(example_conn_array)$vis,
-    default = get_indices(example_conn_array)$default
+    vis = get_indices(ex_conn_array)$vis,
+    default = get_indices(ex_conn_array)$default
   )
 
-  result <- calc_within(example_conn_array, two_net_indices)
+  result <- calc_within(ex_conn_array, two_net_indices)
 
   expect_equal(ncol(result), 3) # within_vis, within_default, within_network
 })

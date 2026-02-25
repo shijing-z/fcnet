@@ -15,26 +15,26 @@ test_that("calc_conn has required parameters", {
 })
 
 test_that("calc_conn returns correct structure", {
-  indices <- get_indices(example_conn_array)
-  result <- calc_conn(example_conn_array, indices,
+  indices <- get_indices(ex_conn_array)
+  result <- calc_conn(ex_conn_array, indices,
                       from = "ahip", to = "default")
 
   expect_true(is.data.frame(result))
-  expect_equal(nrow(result), dim(example_conn_array)[3])
+  expect_equal(nrow(result), dim(ex_conn_array)[3])
   expect_equal(ncol(result), 1)
 })
 
 test_that("calc_conn returns correct column names for single target", {
-  indices <- get_indices(example_conn_array)
-  result <- calc_conn(example_conn_array, indices,
+  indices <- get_indices(ex_conn_array)
+  result <- calc_conn(ex_conn_array, indices,
                       from = "ahip", to = "default")
 
   expect_equal(colnames(result), "ahip_default")
 })
 
 test_that("calc_conn returns correct column names for multiple targets", {
-  indices <- get_indices(example_conn_array)
-  result <- calc_conn(example_conn_array, indices,
+  indices <- get_indices(ex_conn_array)
+  result <- calc_conn(ex_conn_array, indices,
                       from = "ahip",
                       to = c("default", "cont", "vis"))
 
@@ -64,14 +64,14 @@ test_that("calc_conn computes correct ROI-to-network value", {
 })
 
 test_that("calc_conn computes correct ROI-to-ROI value", {
-  indices <- get_indices(example_conn_array)
-  result <- calc_conn(example_conn_array, indices,
+  indices <- get_indices(ex_conn_array)
+  result <- calc_conn(ex_conn_array, indices,
                       from = "ahip", to = "phip")
 
   # Should return the direct cell value for each subject
   ahip_idx <- indices$ahip
   phip_idx <- indices$phip
-  expected <- example_conn_array[ahip_idx, phip_idx, ]
+  expected <- ex_conn_array[ahip_idx, phip_idx, ]
   expect_equal(result$ahip_phip, unname(expected))
 })
 
@@ -95,17 +95,17 @@ test_that("calc_conn computes correct network-to-network value", {
 })
 
 test_that("calc_conn batch mode computes each target separately", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   # Batch call
-  result_batch <- calc_conn(example_conn_array, indices,
+  result_batch <- calc_conn(ex_conn_array, indices,
                             from = "ahip",
                             to = c("default", "vis"))
 
   # Individual calls
-  result_default <- calc_conn(example_conn_array, indices,
+  result_default <- calc_conn(ex_conn_array, indices,
                               from = "ahip", to = "default")
-  result_vis <- calc_conn(example_conn_array, indices,
+  result_vis <- calc_conn(ex_conn_array, indices,
                           from = "ahip", to = "vis")
 
   expect_equal(result_batch$ahip_default, result_default$ahip_default)
@@ -118,11 +118,11 @@ test_that("calc_conn batch mode computes each target separately", {
 
 test_that("calc_conn works with manual_assignments grouping", {
   indices <- get_indices(
-    example_conn_array,
+    ex_conn_array,
     manual_assignments = list(ahip = "hippocampus", phip = "hippocampus")
   )
 
-  result <- calc_conn(example_conn_array, indices,
+  result <- calc_conn(ex_conn_array, indices,
                       from = "hippocampus", to = "default")
 
   expect_true(is.data.frame(result))
@@ -131,12 +131,12 @@ test_that("calc_conn works with manual_assignments grouping", {
 })
 
 test_that("calc_conn works with all 7 networks as targets", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   targets <- c("default", "cont", "limbic", "salventattn",
                "dorsattn", "sommot", "vis")
 
-  result <- calc_conn(example_conn_array, indices,
+  result <- calc_conn(ex_conn_array, indices,
                       from = "ahip", to = targets)
 
   expect_equal(ncol(result), 7)
@@ -148,7 +148,7 @@ test_that("calc_conn works with all 7 networks as targets", {
 # ==============================================================================
 
 test_that("calc_conn errors with non-3D array", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_error(
     calc_conn(matrix(1:9, 3, 3), indices, from = "ahip", to = "default"),
@@ -158,67 +158,67 @@ test_that("calc_conn errors with non-3D array", {
 
 test_that("calc_conn errors with unnamed list", {
   expect_error(
-    calc_conn(example_conn_array, list(1:5, 6:10),
+    calc_conn(ex_conn_array, list(1:5, 6:10),
               from = "ahip", to = "default"),
     "named list"
   )
 })
 
 test_that("calc_conn errors with invalid from name", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_error(
-    calc_conn(example_conn_array, indices,
+    calc_conn(ex_conn_array, indices,
               from = "nonexistent", to = "default"),
     "not found in indices"
   )
 })
 
 test_that("calc_conn error for invalid from lists available names", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_error(
-    calc_conn(example_conn_array, indices,
+    calc_conn(ex_conn_array, indices,
               from = "nonexistent", to = "default"),
     "Available names"
   )
 })
 
 test_that("calc_conn errors with invalid to name", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_error(
-    calc_conn(example_conn_array, indices,
+    calc_conn(ex_conn_array, indices,
               from = "ahip", to = "nonexistent"),
     "not found in indices"
   )
 })
 
 test_that("calc_conn errors with multiple invalid to names", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_error(
-    calc_conn(example_conn_array, indices,
+    calc_conn(ex_conn_array, indices,
               from = "ahip", to = c("default", "fake1", "fake2")),
     "fake1, fake2"
   )
 })
 
 test_that("calc_conn errors when from is not a single string", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_error(
-    calc_conn(example_conn_array, indices,
+    calc_conn(ex_conn_array, indices,
               from = c("ahip", "phip"), to = "default"),
     "single character string"
   )
 })
 
 test_that("calc_conn errors when to is empty", {
-  indices <- get_indices(example_conn_array)
+  indices <- get_indices(ex_conn_array)
 
   expect_error(
-    calc_conn(example_conn_array, indices,
+    calc_conn(ex_conn_array, indices,
               from = "ahip", to = character(0)),
     "at least one name"
   )
@@ -229,7 +229,7 @@ test_that("calc_conn errors when to is empty", {
 # ==============================================================================
 
 test_that("calc_conn works with single subject", {
-  single_subj <- example_conn_array[, , 1, drop = FALSE]
+  single_subj <- ex_conn_array[, , 1, drop = FALSE]
   indices <- get_indices(single_subj)
 
   result <- calc_conn(single_subj, indices,
@@ -240,8 +240,8 @@ test_that("calc_conn works with single subject", {
 })
 
 test_that("calc_conn returns numeric values", {
-  indices <- get_indices(example_conn_array)
-  result <- calc_conn(example_conn_array, indices,
+  indices <- get_indices(ex_conn_array)
+  result <- calc_conn(ex_conn_array, indices,
                       from = "ahip",
                       to = c("default", "vis", "phip"))
 

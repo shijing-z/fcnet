@@ -38,17 +38,17 @@
 #'
 #' @examples
 #' # ROI-to-network
-#' indices <- get_indices(example_conn_array)
-#' ahip_default <- calc_conn(example_conn_array, indices,
+#' indices <- get_indices(ex_conn_array)
+#' ahip_default <- calc_conn(ex_conn_array, indices,
 #'                           from = "ahip", to = "default")
 #'
 #' # ROI-to-multiple-networks
-#' ahip_nets <- calc_conn(example_conn_array, indices,
+#' ahip_nets <- calc_conn(ex_conn_array, indices,
 #'                        from = "ahip",
 #'                        to = c("default", "cont", "vis"))
 #'
 #' # ROI-to-ROI
-#' ahip_phip <- calc_conn(example_conn_array, indices,
+#' ahip_phip <- calc_conn(ex_conn_array, indices,
 #'                        from = "ahip", to = "phip")
 #'
 #' \dontrun{

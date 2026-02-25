@@ -3,7 +3,7 @@
 # ==============================================================================
 
 test_that("get_indices works with character vector", {
-  result <- get_indices(example_roi_names)
+  result <- get_indices(ex_roi_names)
 
   expect_type(result, "list")
   expect_true(all(sapply(result, is.integer)))
@@ -11,18 +11,18 @@ test_that("get_indices works with character vector", {
 })
 
 test_that("get_indices works with connectivity array", {
-  result <- get_indices(example_conn_array)
+  result <- get_indices(ex_conn_array)
 
   expect_type(result, "list")
   expect_equal(length(result), 9)
 
   # Should have same networks as character vector version
-  result_char <- get_indices(example_roi_names)
+  result_char <- get_indices(ex_roi_names)
   expect_equal(names(result), names(result_char))
 })
 
 test_that("get_indices returns correct network names", {
-  result <- get_indices(example_roi_names)
+  result <- get_indices(ex_roi_names)
 
   expected_networks <- c(
     "default",
@@ -43,7 +43,7 @@ test_that("get_indices returns correct network names", {
 # ==============================================================================
 
 test_that("roi_include = 'schaefer' excludes non-Schaefer ROIs", {
-  result <- get_indices(example_roi_names, roi_include = "schaefer")
+  result <- get_indices(ex_roi_names, roi_include = "schaefer")
 
   # Should NOT include ahip or phip
   expect_false("ahip" %in% names(result))
@@ -55,7 +55,7 @@ test_that("roi_include = 'schaefer' excludes non-Schaefer ROIs", {
 })
 
 test_that("roi_include = 'all' includes all ROIs", {
-  result <- get_indices(example_roi_names, roi_include = "all")
+  result <- get_indices(ex_roi_names, roi_include = "all")
 
   # Should include both Schaefer and non-Schaefer
   expect_true("vis" %in% names(result))
@@ -64,7 +64,7 @@ test_that("roi_include = 'all' includes all ROIs", {
 })
 
 test_that("reorder_networks = TRUE orders networks correctly", {
-  result <- get_indices(example_roi_names, reorder_networks = TRUE)
+  result <- get_indices(ex_roi_names, reorder_networks = TRUE)
 
   # First network should be default
   expect_equal(names(result)[1], "default")
@@ -98,7 +98,7 @@ test_that("reorder_networks = FALSE preserves matrix order", {
 
 test_that("manual_assignments groups ROIs correctly", {
   result <- get_indices(
-    example_roi_names,
+    ex_roi_names,
     manual_assignments = list(ahip = "hippocampus", phip = "hippocampus")
   )
 
@@ -116,7 +116,7 @@ test_that("manual_assignments groups ROIs correctly", {
 test_that("manual_assignments is case-insensitive", {
   # Test with different case
   result <- get_indices(
-    example_roi_names,
+    ex_roi_names,
     manual_assignments = list(AHIP = "hippocampus", Phip = "hippocampus")
   )
 
@@ -158,7 +158,7 @@ test_that("get_indices handles array without dimnames", {
 test_that("get_indices handles non-existent ROI in manual_assignments", {
   expect_warning(
     get_indices(
-      example_roi_names,
+      ex_roi_names,
       manual_assignments = list(fake_roi = "test_group")
     ),
     "not found"
@@ -170,28 +170,28 @@ test_that("get_indices handles non-existent ROI in manual_assignments", {
 # ==============================================================================
 
 test_that("get_indices correctly identifies visual network", {
-  result <- get_indices(example_roi_names)
+  result <- get_indices(ex_roi_names)
 
   expect_true("vis" %in% names(result))
   expect_true(length(result$vis) > 0)
 
   # Visual ROIs should be from visual network
-  vis_roi_names <- example_roi_names[result$vis]
+  vis_roi_names <- ex_roi_names[result$vis]
   expect_true(all(grepl("vis", vis_roi_names, ignore.case = TRUE)))
 })
 
 test_that("get_indices correctly identifies somatomotor network", {
-  result <- get_indices(example_roi_names)
+  result <- get_indices(ex_roi_names)
 
   expect_true("sommot" %in% names(result))
   expect_true(length(result$sommot) > 0)
 
-  sommot_roi_names <- example_roi_names[result$sommot]
+  sommot_roi_names <- ex_roi_names[result$sommot]
   expect_true(all(grepl("sommot", sommot_roi_names, ignore.case = TRUE)))
 })
 
 test_that("get_indices correctly identifies attention networks", {
-  result <- get_indices(example_roi_names)
+  result <- get_indices(ex_roi_names)
 
   # Should have both ventral and dorsal attention
   expect_true("salventattn" %in% names(result))
@@ -217,28 +217,28 @@ test_that("get_indices handles different attention network naming", {
 # ==============================================================================
 
 test_that("get_indices returns valid indices", {
-  result <- get_indices(example_roi_names)
+  result <- get_indices(ex_roi_names)
 
   # All indices should be within valid range
   all_indices <- unlist(result)
   expect_true(all(all_indices >= 1))
-  expect_true(all(all_indices <= length(example_roi_names)))
+  expect_true(all(all_indices <= length(ex_roi_names)))
 
   # No duplicate indices across networks
   expect_equal(length(all_indices), length(unique(all_indices)))
 })
 
 test_that("get_indices indices sum to total ROIs", {
-  result <- get_indices(example_roi_names)
+  result <- get_indices(ex_roi_names)
 
   # Total number of indices should equal total ROIs
   total_indices <- sum(sapply(result, length))
-  expect_equal(total_indices, length(example_roi_names))
+  expect_equal(total_indices, length(ex_roi_names))
 })
 
 test_that("get_indices with schaefer only returns correct count", {
-  result_all <- get_indices(example_roi_names, roi_include = "all")
-  result_schaefer <- get_indices(example_roi_names, roi_include = "schaefer")
+  result_all <- get_indices(ex_roi_names, roi_include = "all")
+  result_schaefer <- get_indices(ex_roi_names, roi_include = "schaefer")
 
   # Schaefer-only should have fewer indices
   total_all <- sum(sapply(result_all, length))

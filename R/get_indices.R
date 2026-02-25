@@ -32,7 +32,7 @@
 #'
 #' @examples
 #' # From character vector of ROI names
-#' indices <- get_indices(example_roi_names)
+#' indices <- get_indices(ex_roi_names)
 #' names(indices)
 #'
 #' # Access specific network indices
@@ -41,22 +41,22 @@
 #' indices$ahip
 #'
 #' # From connectivity array with dimnames
-#' indices <- get_indices(example_conn_array)
+#' indices <- get_indices(ex_conn_array)
 #' names(indices)
 #'
 #' # Extract Schaefer ROIs only
-#' indices_schaefer <- get_indices(example_roi_names, roi_include = "schaefer")
+#' indices_schaefer <- get_indices(ex_roi_names, roi_include = "schaefer")
 #' names(indices_schaefer)
 #'
 #' # Manual grouping of ROIs
 #' indices_grouped <- get_indices(
-#'   example_roi_names,
+#'   ex_roi_names,
 #'   manual_assignments = list(ahip = "hippocampus", phip = "hippocampus")
 #' )
 #' indices_grouped$hippocampus
 #'
 #' # Preserve original matrix order
-#' indices_original <- get_indices(example_roi_names, reorder_networks = FALSE)
+#' indices_original <- get_indices(ex_roi_names, reorder_networks = FALSE)
 #'
 #' \dontrun{
 #' # From CONN .mat file

@@ -23,8 +23,8 @@
 #'
 #' @examples
 #' # Calculate within-network connectivity
-#' indices <- get_indices(example_conn_array, roi_include = "schaefer")
-#' within <- calc_within(example_conn_array, indices)
+#' indices <- get_indices(ex_conn_array, roi_include = "schaefer")
+#' within <- calc_within(ex_conn_array, indices)
 #' head(within)
 #'
 #' # Select specific network columns
