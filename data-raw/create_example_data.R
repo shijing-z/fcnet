@@ -1,15 +1,14 @@
 ## Create Example Data for fcnet Package
 ## This script creates small example datasets for documentation and testing
-## Run this script and then use usethis::use_data() to add to package
 
 library(usethis)
 
 # ==============================================================================
 # 1. Example ROI Names (Character Vector)
 # ==============================================================================
-# Based on your actual Schaefer 100 + 2 hippocampal ROIs
+# Based on actual Schaefer 100 + 2 hippocampal ROIs
 
-example_roi_names <- c(
+ex_roi_names <- c(
   # Visual network (first 9 ROIs)
   "Schaefer100.l_vis_1",
   "Schaefer100.l_vis_2",
@@ -57,8 +56,8 @@ example_roi_names <- c(
   "PHIP"
 )
 
-# Save as internal data (exported for users)
-usethis::use_data(example_roi_names, overwrite = TRUE)
+# Save as internal data
+usethis::use_data(ex_roi_names, overwrite = TRUE)
 
 
 # ==============================================================================
@@ -72,11 +71,11 @@ n_rois <- 30
 n_subjects <- 10
 
 # Create realistic connectivity values
-example_conn_array <- array(
+ex_conn_array <- array(
   dim = c(n_rois, n_rois, n_subjects),
   dimnames = list(
-    example_roi_names[1:n_rois],
-    example_roi_names[1:n_rois],
+    ex_roi_names[1:n_rois],
+    ex_roi_names[1:n_rois],
     paste0("subj", 1:n_subjects)
   )
 )
@@ -92,11 +91,11 @@ for (subj in 1:n_subjects) {
   base_mat[base_mat > 1] <- 1
   base_mat[base_mat < -1] <- -1
 
-  example_conn_array[,, subj] <- base_mat
+  ex_conn_array[,, subj] <- base_mat
 }
 
 # Save as internal data
-usethis::use_data(example_conn_array, overwrite = TRUE)
+usethis::use_data(ex_conn_array, overwrite = TRUE)
 
 
 # ==============================================================================
@@ -109,16 +108,16 @@ usethis::use_data(example_conn_array, overwrite = TRUE)
 devtools::load_all()
 
 # Use get_indices to create the indices
-example_network_indices <- get_indices(example_roi_names)
+ex_indices <- get_indices(ex_roi_names)
 
 # Verify it
 print("Generated indices:")
-print(names(example_network_indices))
+print(names(ex_indices))
 print("Types:")
-print(sapply(example_network_indices, class))
+print(sapply(ex_indices, class))
 
 # Save
-usethis::use_data(example_network_indices, overwrite = TRUE)
+usethis::use_data(ex_indices, overwrite = TRUE)
 
 
 # ==============================================================================
@@ -147,9 +146,9 @@ cat(
 #\' }
 #\'
 #\' @examples
-#\' head(example_roi_names)
-#\' length(example_roi_names)
-"example_roi_names"
+#\' head(ex_roi_names)
+#\' length(ex_roi_names)
+"ex_roi_names"
 
 #\' Example Connectivity Array
 #\'
@@ -163,19 +162,19 @@ cat(
 #\'   \\item{Dimension 3}{Subject}
 #\' }
 #\'
-#\' Dimnames include ROI names (from example_roi_names) and subject IDs.
+#\' Dimnames include ROI names (from ex_roi_names) and subject IDs.
 #\'
 #\' @examples
-#\' dim(example_conn_array)
-#\' dimnames(example_conn_array)[[1]]  # ROI names
+#\' dim(ex_conn_array)
+#\' dimnames(ex_conn_array)[[1]]  # ROI names
 #\'
 #\' # Access connectivity for first subject
-#\' example_conn_array[, , 1]
-"example_conn_array"
+#\' ex_conn_array[, , 1]
+"ex_conn_array"
 
 #\' Example Network Indices
 #\'
-#\' Pre-computed network indices for the example_conn_array dataset.
+#\' Pre-computed network indices for the ex_conn_array dataset.
 #\' Shows which ROI positions belong to each functional network.
 #\'
 #\' @format A named list where each element contains integer indices:
@@ -192,15 +191,13 @@ cat(
 #\' }
 #\'
 #\' @examples
-#\' names(example_network_indices)
-#\' example_network_indices$vis
-"example_network_indices"
+#\' names(ex_indices)
+#\' ex_indices$vis
+"ex_indices"
 ',
   file = "R/data.R"
 )
 
 message("Example data created! Now run:")
-message("  1. Move this script to data-raw/")
-message("  2. Run this script")
-message("  3. Document with: devtools::document()")
-message("  4. Check with: devtools::check()")
+message("  1. Document with: devtools::document()")
+message("  2. Check with: devtools::check()")
