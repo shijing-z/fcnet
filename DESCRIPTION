@@ -4,14 +4,12 @@ Version: 0.1.0
 Authors@R: 
     person("Shijing", "Zhou", , "shijingz@uoregon.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7053-0953"))
-Description: Tools for analyzing functional connectivity from fMRI data using 
-    parcellated brain atlases. Designed to work with connectivity matrices 
-    produced by the CONN toolbox. Functions support processing connectivity 
-    matrices, calculating within-network and between-network connectivity metrics, 
-    analyzing region-of-interest to network connectivity patterns, and integrating 
-    connectivity measures with behavioral data. Supports flexible ROI definitions 
-    and network assignments. Optimized for the Schaefer 7-network 100-parcel 
-    atlas but adaptable to other parcellation schemes.
+Description: Tools for analyzing network-level functional connectivity from 
+    fMRI data using parcellated brain atlases. Loads connectivity matrices from 
+    the CONN toolbox, extracts network and ROI groupings, and calculates 
+    within-network, between-network, and user-defined connectivity metrics. 
+    Supports flexible ROI definitions and custom network assignments. Optimized 
+    for the Schaefer atlas but adaptable to other parcellation schemes.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
