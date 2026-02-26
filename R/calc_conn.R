@@ -71,8 +71,7 @@
 #' @export
 
 calc_conn <- function(conn_array, indices, from, to) {
-
-  # --- Input validation ---
+  # Input validation
   if (!is.array(conn_array) || length(dim(conn_array)) != 3) {
     stop(
       "conn_array must be a 3D array (ROI x ROI x subjects). ",
@@ -102,8 +101,11 @@ calc_conn <- function(conn_array, indices, from, to) {
 
   if (!from %in% available_names) {
     stop(
-      "'from' name '", from, "' not found in indices. ",
-      "Available names: ", paste(available_names, collapse = ", "),
+      "'from' name '",
+      from,
+      "' not found in indices. ",
+      "Available names: ",
+      paste(available_names, collapse = ", "),
       call. = FALSE
     )
   }
@@ -113,13 +115,15 @@ calc_conn <- function(conn_array, indices, from, to) {
   if (length(invalid_to) > 0) {
     stop(
       "'to' name(s) not found in indices: ",
-      paste(invalid_to, collapse = ", "), ". ",
-      "Available names: ", paste(available_names, collapse = ", "),
+      paste(invalid_to, collapse = ", "),
+      ". ",
+      "Available names: ",
+      paste(available_names, collapse = ", "),
       call. = FALSE
     )
   }
 
-  # --- Calculate connectivity ---
+  # Calculate connectivity
   n_subjects <- dim(conn_array)[3]
   from_idx <- indices[[from]]
 

@@ -46,8 +46,7 @@
 #' @export
 
 calc_within <- function(conn_array, indices) {
-
-  # --- Input validation ---
+  # Input validation
   if (!is.array(conn_array) || length(dim(conn_array)) != 3) {
     stop(
       "conn_array must be a 3D array (ROI x ROI x subjects). ",
@@ -64,14 +63,15 @@ calc_within <- function(conn_array, indices) {
     )
   }
 
-  # --- Safety net: drop entries with fewer than 2 ROIs ---
+  # Safety net: drop entries with fewer than 2 ROIs
   roi_counts <- sapply(indices, length)
   small_entries <- names(indices)[roi_counts < 2]
 
   if (length(small_entries) > 0) {
     warning(
       "Dropped entries with fewer than 2 ROIs: ",
-      paste(small_entries, collapse = ", "), ". ",
+      paste(small_entries, collapse = ", "),
+      ". ",
       "These are not suitable for network-level calculation. ",
       "Use calc_conn() for ROI-level connectivity.",
       call. = FALSE
@@ -87,7 +87,7 @@ calc_within <- function(conn_array, indices) {
     )
   }
 
-  # --- Calculate within-network connectivity ---
+  # Calculate within-network connectivity
   n_subjects <- dim(conn_array)[3]
   network_names <- names(indices)
 
@@ -104,7 +104,7 @@ calc_within <- function(conn_array, indices) {
   names(within_list) <- paste0("within_", network_names)
   within_network <- data.frame(within_list)
 
-  # --- Add overall within-network average ---
+  # Add overall within-network average
   within_network$within_network <- rowMeans(
     within_network[, paste0("within_", network_names)],
     na.rm = TRUE

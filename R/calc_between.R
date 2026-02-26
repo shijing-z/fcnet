@@ -62,7 +62,7 @@
 #' @export
 
 calc_between <- function(conn_array, indices, pairwise = FALSE) {
-  # --- Input validation ---
+  # Input validation
   if (!is.array(conn_array) || length(dim(conn_array)) != 3) {
     stop(
       "conn_array must be a 3D array (ROI x ROI x subjects). ",
@@ -83,7 +83,7 @@ calc_between <- function(conn_array, indices, pairwise = FALSE) {
     stop("pairwise must be TRUE or FALSE.", call. = FALSE)
   }
 
-  # --- Safety net: drop entries with fewer than 2 ROIs ---
+  # Safety net: drop entries with fewer than 2 ROIs
   roi_counts <- sapply(indices, length)
   small_entries <- names(indices)[roi_counts < 2]
 
@@ -107,12 +107,12 @@ calc_between <- function(conn_array, indices, pairwise = FALSE) {
     )
   }
 
-  # --- Calculate ---
+  # Calculate
   n_subjects <- dim(conn_array)[3]
   network_names <- names(indices)
 
   if (pairwise) {
-    # --- Pairwise mode: all unique network pairs ---
+    # Pairwise mode: all unique network pairs
     pairwise_conn <- data.frame(row.names = seq_len(n_subjects))
 
     for (i in seq_len(length(network_names) - 1)) {
@@ -137,7 +137,7 @@ calc_between <- function(conn_array, indices, pairwise = FALSE) {
 
     return(pairwise_conn)
   } else {
-    # --- Per-network mode: each network vs. all others ---
+    # Per-network mode: each network vs. all others
     between_list <- purrr::map(network_names, function(target_net) {
       target_idx <- indices[[target_net]]
       other_idx <- unlist(indices[network_names != target_net])
@@ -151,7 +151,7 @@ calc_between <- function(conn_array, indices, pairwise = FALSE) {
     names(between_list) <- paste0("between_", network_names)
     between_network <- data.frame(between_list)
 
-    # --- Overall between-network average (raw cell average) ---
+    # Overall between-network average (raw cell average)
     between_avg <- purrr::map_dbl(seq_len(n_subjects), function(subj) {
       all_between <- c()
       for (net in network_names) {
