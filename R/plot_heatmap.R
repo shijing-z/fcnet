@@ -83,7 +83,7 @@ plot_heatmap <- function(
   diag = c("blank", "mirror", "lower", "upper"),
   title = NULL
 ) {
-  # --- Input validation ---
+  # Input validation
   if (!is.array(conn_array) || length(dim(conn_array)) != 3) {
     stop(
       "conn_array must be a 3D array (ROI x ROI x subjects). ",
@@ -102,7 +102,7 @@ plot_heatmap <- function(
 
   diag <- match.arg(diag)
 
-  # --- Handle subject subsetting ---
+  # Handle subject subsetting
   n_total <- dim(conn_array)[3]
 
   if (is.null(subjects)) {
@@ -136,10 +136,10 @@ plot_heatmap <- function(
     stop("No subjects selected.", call. = FALSE)
   }
 
-  # --- Build ROI order from indices ---
+  # Build ROI order from indices
   roi_order <- unlist(indices, use.names = FALSE)
 
-  # --- Average across selected subjects ---
+  # Average across selected subjects
   if (length(subjects) == 1) {
     avg_mat <- conn_array[roi_order, roi_order, subjects]
   } else {
@@ -153,7 +153,7 @@ plot_heatmap <- function(
 
   n_rois <- length(roi_order)
 
-  # --- Apply diagonal style ---
+  # Apply diagonal style
   avg_mat <- switch(
     diag,
     blank = {
@@ -173,17 +173,17 @@ plot_heatmap <- function(
     }
   )
 
-  # --- Reshape to long format ---
+  # Reshape to long format
   plot_df <- expand.grid(row = seq_len(n_rois), col = seq_len(n_rois))
   plot_df$value <- as.vector(avg_mat)
 
-  # --- Compute network boundaries and midpoints ---
+  # Compute network boundaries and midpoints
   net_sizes <- lengths(indices)
   boundaries <- cumsum(net_sizes) + 0.5
   midpoints <- cumsum(net_sizes) - net_sizes / 2
   net_labels <- names(indices)
 
-  # --- Build heatmap ---
+  # Build heatmap
   p <- ggplot2::ggplot(plot_df, ggplot2::aes(x = col, y = row, fill = value)) +
     ggplot2::geom_tile() +
     ggplot2::scale_fill_gradient2(
@@ -191,7 +191,7 @@ plot_heatmap <- function(
       mid = "white",
       high = "#CD5C5C",
       midpoint = 0,
-      na.value = "grey95",
+      na.value = "white",
       name = "Connectivity"
     ) +
     ggplot2::scale_x_continuous(
@@ -215,24 +215,99 @@ plot_heatmap <- function(
       legend.position = "right"
     )
 
-  # --- Add network boundary lines (skip last boundary = edge of plot) ---
+  # Add network boundary lines (skip last boundary = edge of plot)
   boundary_positions <- boundaries[-length(boundaries)]
 
   if (length(boundary_positions) > 0) {
-    p <- p +
-      ggplot2::geom_hline(
-        yintercept = boundary_positions,
-        linewidth = 0.4,
-        color = "black"
-      ) +
-      ggplot2::geom_vline(
-        xintercept = boundary_positions,
-        linewidth = 0.4,
-        color = "black"
+    if (diag %in% c("blank", "mirror")) {
+      # Full-spanning lines for symmetric displays
+      p <- p +
+        ggplot2::geom_hline(
+          yintercept = boundary_positions,
+          linewidth = 0.4,
+          color = "black"
+        ) +
+        ggplot2::geom_vline(
+          xintercept = boundary_positions,
+          linewidth = 0.4,
+          color = "black"
+        )
+    } else if (diag == "lower") {
+      # Clip lines to lower triangle: row >= col
+      plot_min <- 0.5
+      plot_max <- n_rois + 0.5
+
+      # Horizontal lines: left edge to diagonal
+      h_seg <- data.frame(
+        x = plot_min,
+        xend = boundary_positions,
+        y = boundary_positions,
+        yend = boundary_positions
       )
+
+      # Vertical lines: diagonal to bottom edge
+      v_seg <- data.frame(
+        x = boundary_positions,
+        xend = boundary_positions,
+        y = boundary_positions,
+        yend = plot_max
+      )
+
+      p <- p +
+        ggplot2::geom_segment(
+          data = h_seg,
+          ggplot2::aes(x = x, xend = xend, y = y, yend = yend),
+          linewidth = 0.4,
+          color = "black",
+          inherit.aes = FALSE
+        ) +
+        ggplot2::geom_segment(
+          data = v_seg,
+          ggplot2::aes(x = x, xend = xend, y = y, yend = yend),
+          linewidth = 0.4,
+          color = "black",
+          inherit.aes = FALSE
+        )
+    } else if (diag == "upper") {
+      # Clip lines to upper triangle: col >= row
+      plot_min <- 0.5
+      plot_max <- n_rois + 0.5
+
+      # Horizontal lines: diagonal to right edge
+      h_seg <- data.frame(
+        x = boundary_positions,
+        xend = plot_max,
+        y = boundary_positions,
+        yend = boundary_positions
+      )
+
+      # Vertical lines: top edge to diagonal
+      v_seg <- data.frame(
+        x = boundary_positions,
+        xend = boundary_positions,
+        y = plot_min,
+        yend = boundary_positions
+      )
+
+      p <- p +
+        ggplot2::geom_segment(
+          data = h_seg,
+          ggplot2::aes(x = x, xend = xend, y = y, yend = yend),
+          linewidth = 0.4,
+          color = "black",
+          inherit.aes = FALSE
+        ) +
+        ggplot2::geom_segment(
+          data = v_seg,
+          ggplot2::aes(x = x, xend = xend, y = y, yend = yend),
+          linewidth = 0.4,
+          color = "black",
+          inherit.aes = FALSE
+        )
+    }
   }
 
-  # --- Add title if provided ---
+  # Add title if provided
   if (!is.null(title)) {
     p <- p + ggplot2::ggtitle(title)
   }
