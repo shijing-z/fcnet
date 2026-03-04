@@ -17,8 +17,9 @@
 #'     \item \code{"lower"}: show lower triangle only
 #'     \item \code{"upper"}: show upper triangle only
 #'   }
-#' @param grid Logical. If TRUE (default), draw network boundary lines
-#'   on the heatmap. Set to FALSE for a cleaner look without grid lines
+#' @param grid Logical. If TRUE, draw network boundary lines and edge lines
+#'   on the heatmap. Defaults to FALSE for a clean base plot that is easy
+#'   to customize with additional ggplot2 layers
 #' @param title Optional character string for the plot title
 #'
 #' @return A \code{ggplot} object that can be further customized with
@@ -54,8 +55,8 @@
 #' # Lower triangle only
 #' plot_heatmap(ex_conn_array, indices, diag = "lower", title = "Lower Triangle")
 #'
-#' # Without boundary lines
-#' plot_heatmap(ex_conn_array, indices, grid = FALSE)
+#' # With boundary lines
+#' plot_heatmap(ex_conn_array, indices, grid = TRUE)
 #'
 #' # Schaefer-only heatmap (exclude non-Schaefer ROIs)
 #' indices_sch <- get_indices(ex_conn_array, roi_include = "schaefer")
@@ -85,7 +86,7 @@ plot_heatmap <- function(
   indices,
   subjects = NULL,
   diag = c("blank", "lower", "upper"),
-  grid = TRUE,
+  grid = FALSE,
   title = NULL
 ) {
   # Input validation
@@ -269,6 +270,35 @@ plot_heatmap <- function(
           linewidth = 0.4,
           color = "black",
           inherit.aes = FALSE
+        ) +
+        ggplot2::annotate(
+          "segment",
+          x = plot_min,
+          xend = plot_max,
+          y = plot_min,
+          yend = plot_max,
+          linewidth = 0.4,
+          color = "black"
+        ) +
+        # Left edge
+        ggplot2::annotate(
+          "segment",
+          x = plot_min,
+          xend = plot_min,
+          y = plot_min,
+          yend = plot_max,
+          linewidth = 0.4,
+          color = "black"
+        ) +
+        # Bottom edge
+        ggplot2::annotate(
+          "segment",
+          x = plot_min,
+          xend = plot_max,
+          y = plot_max,
+          yend = plot_max,
+          linewidth = 0.4,
+          color = "black"
         )
     } else if (diag == "upper") {
       # Clip lines to upper triangle: col >= row
@@ -305,6 +335,35 @@ plot_heatmap <- function(
           linewidth = 0.4,
           color = "black",
           inherit.aes = FALSE
+        ) +
+        ggplot2::annotate(
+          "segment",
+          x = plot_min,
+          xend = plot_max,
+          y = plot_min,
+          yend = plot_max,
+          linewidth = 0.4,
+          color = "black"
+        ) +
+        # Top edge
+        ggplot2::annotate(
+          "segment",
+          x = plot_min,
+          xend = plot_max,
+          y = plot_min,
+          yend = plot_min,
+          linewidth = 0.4,
+          color = "black"
+        ) +
+        # Right edge
+        ggplot2::annotate(
+          "segment",
+          x = plot_max,
+          xend = plot_max,
+          y = plot_min,
+          yend = plot_max,
+          linewidth = 0.4,
+          color = "black"
         )
     }
   }

@@ -9,7 +9,7 @@ plot_heatmap(
   indices,
   subjects = NULL,
   diag = c("blank", "lower", "upper"),
-  grid = TRUE,
+  grid = FALSE,
   title = NULL
 )
 }
@@ -31,8 +31,9 @@ integer indices internally}
 \item \code{"upper"}: show upper triangle only
 }}
 
-\item{grid}{Logical. If TRUE (default), draw network boundary lines
-on the heatmap. Set to FALSE for a cleaner look without grid lines}
+\item{grid}{Logical. If TRUE, draw network boundary lines and edge lines
+on the heatmap. Defaults to FALSE for a clean base plot that is easy
+to customize with additional ggplot2 layers}
 
 \item{title}{Optional character string for the plot title}
 }
@@ -75,8 +76,8 @@ plot_heatmap(ex_conn_array, indices, subjects = c(rep(TRUE, 5), rep(FALSE, 5)))
 # Lower triangle only
 plot_heatmap(ex_conn_array, indices, diag = "lower", title = "Lower Triangle")
 
-# Without boundary lines
-plot_heatmap(ex_conn_array, indices, grid = FALSE)
+# With boundary lines
+plot_heatmap(ex_conn_array, indices, grid = TRUE)
 
 # Schaefer-only heatmap (exclude non-Schaefer ROIs)
 indices_sch <- get_indices(ex_conn_array, roi_include = "schaefer")
