@@ -31,8 +31,7 @@
 #' }
 #'
 #' Names in \code{from} and \code{to} reference entries in \code{indices},
-#' including any manual groupings created via \code{manual_assignments} in
-#' \code{\link{get_indices}}.
+#' including any manual groupings.
 #'
 #' Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
 #'

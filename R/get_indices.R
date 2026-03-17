@@ -22,9 +22,9 @@
 #'   integer vectors of ROI indices.
 #'
 #' @details
-#' Schaefer ROIs are grouped by network (e.g., all visual ROIs → "vis").
+#' Schaefer ROIs are grouped by network (e.g., all visual ROIs become "vis").
 #' Non-Schaefer ROIs are preserved individually with lowercase names
-#' (e.g., "AHIP" → "ahip"). Attention network naming variations across
+#' (e.g., "AHIP" becomes "ahip"). Attention network naming variations across
 #' atlas versions (ventatt, salventattn, dorsatt, etc.) are automatically
 #' normalized for consistency.
 #'
@@ -242,8 +242,8 @@ extract_schaefer_networks <- function(roi_names) {
 #' @details
 #' Handles variations across different Schaefer atlas versions and preprocessing pipelines:
 #' - Ventral attention: ventatt, ventattn, salventatt, salvatt, salvattn,
-#'   ventralatt, ventralattn, salience, van → salventattn
-#' - Dorsal attention: dorsatt, dorsalatt, dorsalattn, dan → dorsattn
+#'   ventralatt, ventralattn, salience, van -- all mapped to salventattn
+#' - Dorsal attention: dorsatt, dorsalatt, dorsalattn, dan -- all mapped to dorsattn
 normalize_attention_networks <- function(network_names) {
   sapply(
     network_names,
