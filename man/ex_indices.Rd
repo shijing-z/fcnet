@@ -10,7 +10,7 @@ A named list where each element contains integer indices:
 \item{vis}{Indices for visual network ROIs}
 \item{sommot}{Indices for somatomotor network ROIs}
 \item{dorsattn}{Indices for dorsal attention ROIs}
-\item{salventattn}{Indices for ventral attention ROIs}
+\item{salventattn}{Indices for salience/ventral attention ROIs}
 \item{limbic}{Indices for limbic network ROIs}
 \item{cont}{Indices for control network ROIs}
 \item{default}{Indices for default mode network ROIs}

@@ -19,7 +19,7 @@ ex_conn_array
 }
 \description{
 A small 3D connectivity array (30 ROIs × 30 ROIs × 10 subjects) with
-realistic correlation values for demonstration purposes.
+simulated correlation values for demonstration purposes.
 }
 \examples{
 dim(ex_conn_array)
