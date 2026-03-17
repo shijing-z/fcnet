@@ -8,7 +8,7 @@ adaptable to other parcellation schemes.
 *AHIP/PHIP connectivity to 7 networks by age group, generated based on `plot_compare` outputs*
 
 ![Example 2](man/figures/example2.png)
-*Hippocampal connectivity vs. exemplar memory by age group, generated based on `plot_scatter` outputs*
+*Hippocampal connectivity to 7 networks vs. memory performance by age group, generated based on `plot_scatter` outputs*
 
 
 ## Installation
