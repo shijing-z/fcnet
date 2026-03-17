@@ -51,7 +51,8 @@
 #' )
 #'
 #' # ROI-to-network comparison
-#' ahip_df <- calc_conn(ex_conn_array, indices,
+#' indices_all <- get_indices(ex_conn_array)
+#' ahip_df <- calc_conn(ex_conn_array, indices_all,
 #'   from = "ahip", to = c("default", "cont", "vis")
 #' )
 #' ahip_df$group <- rep(c("YA", "OA"), times = c(5, 5))
@@ -104,8 +105,7 @@ plot_compare <- function(
   }
 
   if (!is.character(conn_vars) || length(conn_vars) == 0) {
-    stop(
-      "conn_vars must be a character vector with at least one column name.",
+    stop("conn_vars must be a character vector with at least one column name.",
       call. = FALSE
     )
   }
@@ -120,17 +120,14 @@ plot_compare <- function(
   }
 
   if (!is.character(group) || length(group) != 1) {
-    stop(
-      "group must be a single character string naming a column in data.",
+    stop("group must be a single character string naming a column in data.",
       call. = FALSE
     )
   }
 
   if (!group %in% names(data)) {
     stop(
-      "Group column '",
-      group,
-      "' not found in data.",
+      "Group column '", group, "' not found in data.",
       call. = FALSE
     )
   }
@@ -174,38 +171,30 @@ plot_compare <- function(
   plot_long$variable <- factor(plot_long$variable, levels = conn_vars)
 
   # Compute summary statistics
-  summary_df <- do.call(
-    rbind,
-    lapply(
-      split(
-        plot_long,
-        list(plot_long$group_var, plot_long$variable),
-        drop = TRUE
-      ),
-      function(chunk) {
-        vals <- chunk$connectivity
-        n <- sum(!is.na(vals))
-        m <- mean(vals, na.rm = TRUE)
-        s <- stats::sd(vals, na.rm = TRUE)
+  summary_df <- do.call(rbind, lapply(
+    split(plot_long, list(plot_long$group_var, plot_long$variable), drop = TRUE),
+    function(chunk) {
+      vals <- chunk$connectivity
+      n <- sum(!is.na(vals))
+      m <- mean(vals, na.rm = TRUE)
+      s <- stats::sd(vals, na.rm = TRUE)
 
-        err <- switch(
-          error_bar,
-          se = s / sqrt(n),
-          sd = s,
-          ci = stats::qt(0.975, df = n - 1) * s / sqrt(n),
-          none = 0
-        )
+      err <- switch(error_bar,
+        se = s / sqrt(n),
+        sd = s,
+        ci = stats::qt(0.975, df = n - 1) * s / sqrt(n),
+        none = 0
+      )
 
-        data.frame(
-          group_var = chunk$group_var[1],
-          variable = chunk$variable[1],
-          mean_conn = m,
-          error = err,
-          stringsAsFactors = FALSE
-        )
-      }
-    )
-  )
+      data.frame(
+        group_var = chunk$group_var[1],
+        variable = chunk$variable[1],
+        mean_conn = m,
+        error = err,
+        stringsAsFactors = FALSE
+      )
+    }
+  ))
 
   rownames(summary_df) <- NULL
   summary_df$variable <- factor(summary_df$variable, levels = conn_vars)
@@ -213,15 +202,11 @@ plot_compare <- function(
   # Clean labels
   if (clean_labels) {
     display_labels <- gsub("_", "-", conn_vars)
-    display_labels <- sapply(
-      display_labels,
-      function(label) {
-        parts <- strsplit(label, "-")[[1]]
-        parts <- tools::toTitleCase(parts)
-        paste(parts, collapse = "-")
-      },
-      USE.NAMES = FALSE
-    )
+    display_labels <- sapply(display_labels, function(label) {
+      parts <- strsplit(label, "-")[[1]]
+      parts <- tools::toTitleCase(parts)
+      paste(parts, collapse = "-")
+    }, USE.NAMES = FALSE)
   } else {
     display_labels <- conn_vars
   }

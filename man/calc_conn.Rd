@@ -8,10 +8,10 @@ calc_conn(conn_array, indices, from, to)
 }
 \arguments{
 \item{conn_array}{3D numeric array of connectivity values with dimensions
-(ROI x ROI x subjects), as returned by \code{\link{load_matrices}}}
+(ROI x ROI x subjects)}
 
 \item{indices}{Named list of integer vectors mapping network/ROI names to
-index positions, as returned by \code{\link{get_indices}}}
+index positions}
 
 \item{from}{Character. Name of the source ROI or network. Must match a
 name in \code{indices}}
@@ -43,10 +43,7 @@ Supports any combination of ROIs and networks:
 }
 
 Names in \code{from} and \code{to} reference entries in \code{indices},
-including any manual groupings created via \code{manual_assignments} in
-\code{\link{get_indices}}.
-
-Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
+including any manual groupings.
 }
 \examples{
 # ROI-to-network

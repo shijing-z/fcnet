@@ -61,6 +61,7 @@
 #' \code{\link{plot_heatmap}} for connectivity matrix heatmaps.
 #' \code{\link{plot_compare}} for group comparison bar plots.
 #'
+#' @importFrom rlang .data
 #' @export
 
 plot_scatter <- function(
@@ -77,15 +78,13 @@ plot_scatter <- function(
   }
 
   if (!is.character(x) || length(x) != 1) {
-    stop(
-      "x must be a single character string naming a column in data.",
+    stop("x must be a single character string naming a column in data.",
       call. = FALSE
     )
   }
 
   if (!is.character(y) || length(y) != 1) {
-    stop(
-      "y must be a single character string naming a column in data.",
+    stop("y must be a single character string naming a column in data.",
       call. = FALSE
     )
   }
@@ -108,8 +107,7 @@ plot_scatter <- function(
 
   if (!is.null(group)) {
     if (!is.character(group) || length(group) != 1) {
-      stop(
-        "group must be a single character string naming a column in data.",
+      stop("group must be a single character string naming a column in data.",
         call. = FALSE
       )
     }

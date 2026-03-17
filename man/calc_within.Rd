@@ -8,10 +8,10 @@ calc_within(conn_array, indices)
 }
 \arguments{
 \item{conn_array}{3D numeric array of connectivity values with dimensions
-(ROI x ROI x subjects), as returned by \code{\link{load_matrices}}}
+(ROI x ROI x subjects)}
 
 \item{indices}{Named list of integer vectors mapping network names to ROI
-index positions, as returned by \code{\link{get_indices}}}
+index positions}
 }
 \value{
 A data frame with one row per subject. Contains one column per
@@ -28,8 +28,6 @@ Entries in \code{indices} with fewer than 2 ROIs are automatically dropped
 with a warning, as within-network connectivity requires at least 2 ROIs
 to compute an upper triangle. Use \code{\link{calc_conn}} for single-ROI
 connectivity.
-
-Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
 }
 \examples{
 # Calculate within-network connectivity

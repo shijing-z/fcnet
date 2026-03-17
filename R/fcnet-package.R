@@ -1,0 +1,39 @@
+#' fcnet: Functional Connectivity Network Analysis
+#'
+#' Tools for analyzing functional brain connectivity from CONN toolbox
+#' output. Provides functions for loading connectivity matrices, organizing
+#' ROIs by network, computing within-network, between-network, and
+#' user-defined connectivity, and generating publication-quality
+#' visualizations.
+#'
+#' @section Data loading:
+#' \code{\link{load_matrices}} loads correlation or z-transformed matrices
+#' from CONN toolbox .mat files.
+#'
+#' @section ROI organization:
+#' \code{\link{get_indices}} extracts and organizes ROI positions by
+#' functional network. Supports Schaefer atlases (100-1000 parcels, 7 or
+#' 17 networks) and custom ROIs.
+#'
+#' @section Connectivity calculation:
+#' \code{\link{calc_within}} computes within-network connectivity.
+#' \code{\link{calc_between}} computes between-network connectivity.
+#' \code{\link{calc_conn}} computes user-defined ROI or network
+#' connectivity.
+#'
+#' @section Visualization:
+#' \code{\link{plot_heatmap}} displays connectivity matrices as heatmaps
+#' with network boundaries.
+#' \code{\link{plot_compare}} creates group comparison bar plots.
+#' \code{\link{plot_scatter}} creates connectivity-behavior scatter plots.
+#'
+#' All visualization functions return \code{ggplot} objects for further
+#' customization.
+#'
+#' @section Atlas compatibility:
+#' All functions work with any Schaefer atlas version (100-1000 parcels,
+#' 7 or 17 networks) and support non-Schaefer ROIs such as hippocampal
+#' subregions.
+#'
+#' @keywords internal
+"_PACKAGE"

@@ -15,10 +15,10 @@ plot_heatmap(
 }
 \arguments{
 \item{conn_array}{3D numeric array of connectivity values with dimensions
-(ROI x ROI x subjects), as returned by \code{\link{load_matrices}}}
+(ROI x ROI x subjects)}
 
 \item{indices}{Named list of integer vectors mapping network names to ROI
-index positions, as returned by \code{\link{get_indices}}}
+index positions}
 
 \item{subjects}{Integer or logical vector to subset subjects (third
 dimension). Defaults to all subjects. Logical vectors are converted to
@@ -52,19 +52,15 @@ plots the resulting matrix using \code{ggplot2::geom_tile()} with a
 diverging color scale centered at zero.
 
 Network boundary lines and axis labels are derived from the \code{indices}
-object. ROIs are reordered to match the network ordering in \code{indices},
-so the heatmap reflects any reordering applied by \code{\link{get_indices}}.
+object. ROIs are reordered to match the network ordering in \code{indices}.
 
 Which ROIs appear in the heatmap is controlled by \code{indices}. Use
-\code{roi_include = "schaefer"} in \code{\link{get_indices}} to exclude
-non-Schaefer ROIs, or \code{roi_include = "all"} to include them as
-additional blocks with their own boundaries and labels.
-
-Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
+\code{roi_include} in \code{\link{get_indices}} to include or exclude
+non-Schaefer ROIs.
 
 The y-axis is reversed (\code{scale_y_reverse()}) so row 1 appears at the
 top, matching conventional matrix layout. Keep this in mind when adding
-custom scale layers — replacing the y-scale will flip the orientation.
+custom scale layers, as replacing the y-scale will flip the orientation.
 }
 \examples{
 # Basic heatmap of all subjects
@@ -102,6 +98,7 @@ plot_heatmap(z_mat, indices, subjects = demo$group == "OA",
 
 }
 \seealso{
+\code{\link{plot_compare}} for group comparison bar plots.
+\code{\link{plot_scatter}} for connectivity-behavior scatter plots.
 \code{\link{get_indices}} for generating the \code{indices} input.
-\code{\link{load_matrices}} for loading connectivity data.
 }

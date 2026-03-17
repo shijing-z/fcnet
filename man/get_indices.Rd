@@ -39,13 +39,11 @@ Schaefer ROIs are automatically grouped by functional network. Other ROIs
 are preserved individually unless grouped via manual_assignments.
 }
 \details{
-Schaefer ROIs are grouped by network (e.g., all visual ROIs → "vis").
+Schaefer ROIs are grouped by network (e.g., all visual ROIs become "vis").
 Non-Schaefer ROIs are preserved individually with lowercase names
-(e.g., "AHIP" → "ahip"). Attention network naming variations across
+(e.g., "AHIP" becomes "ahip"). Attention network naming variations across
 atlas versions (ventatt, salventattn, dorsatt, etc.) are automatically
 normalized for consistency.
-
-Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
 }
 \examples{
 # From character vector of ROI names
@@ -84,4 +82,11 @@ conn_mats <- NetworkToolbox::convertConnBrainMat("path/to/conn.mat")
 indices <- get_indices(conn_mats$rmat)
 }
 
+}
+\seealso{
+\code{\link{load_matrices}} for loading connectivity data.
+\code{\link{calc_within}}, \code{\link{calc_between}},
+\code{\link{calc_conn}} for connectivity calculations using indices.
+\code{\link{plot_heatmap}} for visualizing connectivity matrices using
+indices.
 }

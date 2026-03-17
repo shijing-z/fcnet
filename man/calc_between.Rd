@@ -8,10 +8,10 @@ calc_between(conn_array, indices, pairwise = FALSE)
 }
 \arguments{
 \item{conn_array}{3D numeric array of connectivity values with dimensions
-(ROI x ROI x subjects), as returned by \code{\link{load_matrices}}}
+(ROI x ROI x subjects)}
 
 \item{indices}{Named list of integer vectors mapping network names to ROI
-index positions, as returned by \code{\link{get_indices}}}
+index positions}
 
 \item{pairwise}{Logical. If FALSE (default), returns per-network averages
 (each network vs. all other networks). If TRUE, returns all unique
@@ -43,8 +43,6 @@ The overall \code{between_network} average (when \code{pairwise = FALSE})
 uses raw cell average: all between-network connections are pooled and
 averaged with equal weight per cell. This means larger network pairs
 contribute proportionally more than smaller pairs.
-
-Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
 }
 \examples{
 # Per-network between-network averages

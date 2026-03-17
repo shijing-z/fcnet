@@ -19,8 +19,8 @@ Normalize variations in attention network names
 Handles variations across different Schaefer atlas versions and preprocessing pipelines:
 \itemize{
 \item Ventral attention: ventatt, ventattn, salventatt, salvatt, salvattn,
-ventralatt, ventralattn, salience, van → salventattn
-\item Dorsal attention: dorsatt, dorsalatt, dorsalattn, dan → dorsattn
+ventralatt, ventralattn, salience, van -- all mapped to salventattn
+\item Dorsal attention: dorsatt, dorsalatt, dorsalattn, dan -- all mapped to dorsattn
 }
 }
 \keyword{internal}
