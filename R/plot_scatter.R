@@ -1,8 +1,7 @@
 #' Plot connectivity-behavior scatter
 #'
-#' Create scatter plots with linear regression lines and optional
-#' per-group correlation statistics for exploring connectivity-behavior
-#' relationships.
+#' Create scatter plots with linear regression lines for exploring
+#' connectivity-behavior relationships.
 #'
 #' @param data Data frame with one row per subject containing connectivity
 #'   and behavioral/outcome columns
@@ -11,11 +10,8 @@
 #' @param y Character string naming the y-axis column (typically a
 #'   behavioral or outcome variable)
 #' @param group Optional character string naming a grouping column. When
-#'   provided, plots per-group regression lines and statistics. When NULL
-#'   (default), plots a single regression line
-#' @param show_stats Logical. If TRUE (default), display Pearson correlation
-#'   r and p values in the upper-left corner of the plot. When \code{group}
-#'   is provided, statistics are shown per group
+#'   provided, plots per-group regression lines. When NULL (default),
+#'   plots a single regression line
 #' @param clean_labels Logical. If TRUE (default), clean column names for
 #'   axis display by replacing underscores with hyphens and applying title
 #'   case. If FALSE, use raw column names
@@ -28,9 +24,6 @@
 #' Regression lines are fitted with \code{geom_smooth(method = "lm")} and
 #' include a shaded 95 percent confidence band. When \code{group} is
 #' provided, separate lines are fitted for each group.
-#'
-#' Correlation statistics use Pearson's r with significance stars:
-#' *** p < 0.001, ** p < 0.01, * p < 0.05.
 #'
 #' Axis labels can always be overridden with \code{+ labs(x = ..., y = ...)}
 #' regardless of the \code{clean_labels} setting.
@@ -49,11 +42,6 @@
 #' ahip_df$group <- rep(c("YA", "OA"), times = c(5, 5))
 #' plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
 #'   group = "group"
-#' )
-#'
-#' # Without statistics
-#' plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
-#'   group = "group", show_stats = FALSE
 #' )
 #'
 #' \dontrun{
@@ -80,7 +68,6 @@ plot_scatter <- function(
   x,
   y,
   group = NULL,
-  show_stats = TRUE,
   clean_labels = TRUE,
   title = NULL
 ) {
@@ -90,13 +77,15 @@ plot_scatter <- function(
   }
 
   if (!is.character(x) || length(x) != 1) {
-    stop("x must be a single character string naming a column in data.",
+    stop(
+      "x must be a single character string naming a column in data.",
       call. = FALSE
     )
   }
 
   if (!is.character(y) || length(y) != 1) {
-    stop("y must be a single character string naming a column in data.",
+    stop(
+      "y must be a single character string naming a column in data.",
       call. = FALSE
     )
   }
@@ -119,7 +108,8 @@ plot_scatter <- function(
 
   if (!is.null(group)) {
     if (!is.character(group) || length(group) != 1) {
-      stop("group must be a single character string naming a column in data.",
+      stop(
+        "group must be a single character string naming a column in data.",
         call. = FALSE
       )
     }
@@ -209,106 +199,6 @@ plot_scatter <- function(
   if (!is.null(group)) {
     p <- p +
       ggplot2::guides(fill = "none")
-  }
-
-  # Add correlation statistics
-  if (show_stats) {
-    x_range <- range(data[[x]], na.rm = TRUE)
-    y_range <- range(data[[y]], na.rm = TRUE)
-    y_span <- diff(y_range)
-
-    # Position labels in upper-left corner
-    label_x <- x_range[1] + 0.02 * diff(x_range)
-
-    if (is.null(group)) {
-      # Single correlation
-      r_val <- stats::cor(data[[x]], data[[y]], use = "complete.obs")
-      p_val <- stats::cor.test(data[[x]], data[[y]])$p.value
-
-      star <- if (p_val < 0.001) {
-        "***"
-      } else if (p_val < 0.01) {
-        "**"
-      } else if (p_val < 0.05) {
-        "*"
-      } else {
-        ""
-      }
-
-      label_text <- paste0(
-        "r = ", sprintf("%.2f", r_val),
-        ", p = ", sprintf("%.3f", p_val),
-        star
-      )
-
-      stat_df <- data.frame(
-        x_pos = label_x,
-        y_pos = y_range[2] - 0.03 * y_span,
-        label = label_text,
-        stringsAsFactors = FALSE
-      )
-
-      p <- p +
-        ggplot2::geom_text(
-          data = stat_df,
-          ggplot2::aes(x = x_pos, y = y_pos, label = label),
-          hjust = 0,
-          size = 4,
-          fontface = "bold",
-          inherit.aes = FALSE
-        )
-    } else {
-      # Per-group correlations
-      group_levels <- levels(data[[group]])
-
-      stat_list <- lapply(seq_along(group_levels), function(i) {
-        grp <- group_levels[i]
-        subset_data <- data[data[[group]] == grp, ]
-
-        r_val <- stats::cor(
-          subset_data[[x]], subset_data[[y]],
-          use = "complete.obs"
-        )
-        p_val <- stats::cor.test(
-          subset_data[[x]], subset_data[[y]]
-        )$p.value
-
-        star <- if (p_val < 0.001) {
-          "***"
-        } else if (p_val < 0.01) {
-          "**"
-        } else if (p_val < 0.05) {
-          "*"
-        } else {
-          ""
-        }
-
-        data.frame(
-          group_var = grp,
-          x_pos = label_x,
-          y_pos = y_range[2] - (0.03 + (i - 1) * 0.07) * y_span,
-          label = paste0(
-            grp, ": r = ", sprintf("%.2f", r_val),
-            ", p = ", sprintf("%.3f", p_val),
-            star
-          ),
-          stringsAsFactors = FALSE
-        )
-      })
-
-      stat_df <- do.call(rbind, stat_list)
-
-      p <- p +
-        ggplot2::geom_text(
-          data = stat_df,
-          ggplot2::aes(x = x_pos, y = y_pos, label = label, color = group_var),
-          hjust = 0,
-          size = 4,
-          fontface = "bold",
-          inherit.aes = FALSE,
-          show.legend = FALSE
-        )
-    }
   }
 
   # Add title
