@@ -254,13 +254,13 @@ normalize_attention_networks <- function(network_names) {
       suffix <- ""
       base_name <- name
 
-      # Remove hyphens (handles variants like "sal-vent-attn" or "dorsal-attention")
-      base_name <- gsub("-", "", base_name)
-
       if (grepl("[abc]$", name)) {
         suffix <- substr(name, nchar(name), nchar(name))
         base_name <- substr(name, 1, nchar(name) - 1)
       }
+
+      # Remove hyphens (handles variants like "sal-vent-attn" or "dorsal-attention")
+      base_name <- gsub("-", "", base_name)
 
       # Normalize ventral attention variations (order matters - check longer patterns first)
       ventral_patterns <- c(

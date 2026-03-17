@@ -9,7 +9,7 @@ library(usethis)
 # Based on actual Schaefer 100 + 2 hippocampal ROIs
 
 ex_roi_names <- c(
-  # Visual network (first 9 ROIs)
+  # Visual network (5 ROIs)
   "Schaefer100.l_vis_1",
   "Schaefer100.l_vis_2",
   "Schaefer100.l_vis_3",

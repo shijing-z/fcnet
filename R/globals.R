@@ -3,7 +3,16 @@
 
 utils::globalVariables(c(
   # plot_compare
-  "variable", "mean_conn", "group_var", "error",
+  "variable",
+  "mean_conn",
+  "group_var",
+  "error",
   # plot_heatmap
-  "col", "row", "value", "x", "xend", "y", "yend"
+  "col",
+  "row",
+  "value",
+  "x",
+  "xend",
+  "y",
+  "yend"
 ))

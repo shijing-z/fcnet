@@ -58,6 +58,14 @@ load_matrices <- function(mat_file, type, exclude = NULL) {
   # Validate type argument
   type <- match.arg(type, choices = c("rmat", "zmat"))
 
+  if (!requireNamespace("NetworkToolbox", quietly = TRUE)) {
+    stop(
+      "Package 'NetworkToolbox' is required to read .mat files. ",
+      "Install with: install.packages('NetworkToolbox')",
+      call. = FALSE
+    )
+  }
+
   conn_mats <- NetworkToolbox::convertConnBrainMat(mat_file)
 
   if (type == "rmat") {
@@ -68,6 +76,24 @@ load_matrices <- function(mat_file, type, exclude = NULL) {
 
   # Apply exclusions if specified
   if (!is.null(exclude)) {
+    if (!is.numeric(exclude)) {
+      stop(
+        "exclude must be a numeric vector of subject indices.",
+        call. = FALSE
+      )
+    }
+
+    n_subjects <- dim(result)[3]
+
+    if (any(exclude < 1) || any(exclude > n_subjects)) {
+      stop(
+        "exclude indices must be between 1 and ",
+        n_subjects,
+        ".",
+        call. = FALSE
+      )
+    }
+
     result <- result[,, -exclude, drop = FALSE]
   }
 

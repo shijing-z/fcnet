@@ -1,4 +1,3 @@
-
 #' Example ROI Names from Schaefer Atlas
 #'
 #' A character vector containing 30 example ROI names from the Schaefer 100
@@ -25,7 +24,7 @@
 #' Example Connectivity Array
 #'
 #' A small 3D connectivity array (30 ROIs × 30 ROIs × 10 subjects) with
-#' realistic correlation values for demonstration purposes.
+#' simulated correlation values for demonstration purposes.
 #'
 #' @format A 3D array with dimensions (30, 30, 10):
 #' \describe{
@@ -54,7 +53,7 @@
 #'   \item{vis}{Indices for visual network ROIs}
 #'   \item{sommot}{Indices for somatomotor network ROIs}
 #'   \item{dorsattn}{Indices for dorsal attention ROIs}
-#'   \item{salventattn}{Indices for ventral attention ROIs}
+#'   \item{salventattn}{Indices for salience/ventral attention ROIs}
 #'   \item{limbic}{Indices for limbic network ROIs}
 #'   \item{cont}{Indices for control network ROIs}
 #'   \item{default}{Indices for default mode network ROIs}
