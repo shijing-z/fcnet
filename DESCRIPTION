@@ -5,26 +5,28 @@ Authors@R:
     person("Shijing", "Zhou", , "shijingz@uoregon.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7053-0953"))
 Description: Tools for analyzing network-level functional connectivity from 
-    fMRI data using parcellated brain atlases. Loads connectivity matrices from 
-    the CONN toolbox, extracts network and ROI groupings, calculates 
-    within-network, between-network, and user-defined connectivity metrics, 
-    and generates visualizations. Supports flexible ROI 
-    definitions and custom network assignments. Optimized for the Schaefer 
-    atlas but adaptable to other parcellation schemes.
+    fMRI data using parcellated brain atlases. Extracts network and ROI 
+    groupings, calculates within-network, between-network, and user-defined 
+    connectivity metrics, and generates visualizations. Supports loading 
+    connectivity matrices from the CONN toolbox, flexible ROI definitions, 
+    and custom network assignments. Designed for the Schaefer atlas but 
+    adaptable to other parcellation schemes.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
     knitr,
+    NetworkToolbox,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
     ggplot2,
-    NetworkToolbox,
     purrr,
-    rlang
+    rlang,
+    stats,
+    tools
 Depends: 
     R (>= 3.5)
 LazyData: true

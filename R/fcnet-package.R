@@ -1,7 +1,7 @@
 #' fcnet: Functional Connectivity Network Analysis
 #'
-#' Tools for analyzing functional brain connectivity from CONN toolbox
-#' output. Provides functions for loading connectivity matrices, organizing
+#' Tools for analyzing network-level functional connectivity from fMRI
+#' data. Provides functions for loading connectivity matrices, organizing
 #' ROIs by network, computing within-network, between-network, and
 #' user-defined connectivity, and generating visualizations.
 #'
@@ -30,9 +30,8 @@
 #' customization.
 #'
 #' @section Atlas compatibility:
-#' All functions work with any Schaefer atlas version (100-1000 parcels,
-#' 7 or 17 networks) and support non-Schaefer ROIs such as hippocampal
-#' subregions.
+#' All functions work with any Schaefer atlas version and support
+#' non-Schaefer ROIs such as hippocampal subregions.
 #'
 #' @keywords internal
 "_PACKAGE"
