@@ -65,10 +65,13 @@ Load connectivity matrices from CONN toolbox output (requires
 
 ```r
 # rmat has ROI names in CONN toolbox .mat files — use it for organizing ROIs
-r_mat <- load_matrices("data/conn.mat", type = "rmat", exclude = c(46, 57))
+r_mat <- load_matrices("data/conn.mat", type = "rmat")
 
 # zmat (Fisher z-transformed)
-z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
+z_mat <- load_matrices("data/conn.mat", type = "zmat")
+
+# Optional: exclude subjects by index
+# z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
 ```
 
 Or bring your own 3D array (ROI x ROI x subjects) with ROI names in
