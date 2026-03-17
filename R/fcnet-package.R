@@ -3,8 +3,7 @@
 #' Tools for analyzing functional brain connectivity from CONN toolbox
 #' output. Provides functions for loading connectivity matrices, organizing
 #' ROIs by network, computing within-network, between-network, and
-#' user-defined connectivity, and generating publication-quality
-#' visualizations.
+#' user-defined connectivity, and generating visualizations.
 #'
 #' @section Data loading:
 #' \code{\link{load_matrices}} loads correlation or z-transformed matrices
