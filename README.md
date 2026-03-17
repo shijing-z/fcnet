@@ -4,7 +4,8 @@ Tools for analyzing network-level functional connectivity from fMRI data
 using parcellated brain atlases. Designed for the Schaefer atlas but
 adaptable to other parcellation schemes.
 
-![Example heatmap](man/figures/heatmap_example.png)
+![Example 1](man/figures/example1.png)
+![Example 2](man/figures/example2.png)
 
 ## Installation
 
