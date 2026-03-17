@@ -74,7 +74,8 @@ plot_compare(within_df,
 )
 
 # ROI-to-network comparison
-ahip_df <- calc_conn(ex_conn_array, indices,
+indices_all <- get_indices(ex_conn_array)
+ahip_df <- calc_conn(ex_conn_array, indices_all,
   from = "ahip", to = c("default", "cont", "vis")
 )
 ahip_df$group <- rep(c("YA", "OA"), times = c(5, 5))
