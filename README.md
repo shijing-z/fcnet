@@ -71,7 +71,7 @@ r_mat <- load_matrices("data/conn.mat", type = "rmat")
 z_mat <- load_matrices("data/conn.mat", type = "zmat")
 
 # Optional: exclude subjects by index
-# z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
+# z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(3, 5))
 ```
 
 Or bring your own 3D array (ROI x ROI x subjects) with ROI names in

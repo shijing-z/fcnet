@@ -64,7 +64,7 @@
 #'
 #' \dontrun{
 #' # Group comparison workflow
-#' z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
+#' z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(3, 5))
 #' indices <- get_indices(z_mat)
 #'
 #' # Young adults
