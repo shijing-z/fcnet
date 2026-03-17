@@ -33,9 +33,7 @@ test_that("plot_scatter has correct defaults", {
 make_scatter_df <- function() {
   set.seed(42)
   indices <- get_indices(ex_conn_array)
-  df <- calc_conn(ex_conn_array, indices,
-    from = "ahip", to = "default"
-  )
+  df <- calc_conn(ex_conn_array, indices, from = "ahip", to = "default")
   df$behavior <- rnorm(10)
   df$group <- rep(c("YA", "OA"), times = c(5, 5))
   df
@@ -236,12 +234,12 @@ test_that("plot_scatter preserves raw labels when clean_labels = FALSE", {
 test_that("plot_scatter title-cases each segment after hyphens", {
   df <- data.frame(
     default_cont = rnorm(10),
-    exemem_score = rnorm(10)
+    memory_score = rnorm(10)
   )
 
-  p <- plot_scatter(df, "default_cont", "exemem_score", clean_labels = TRUE)
+  p <- plot_scatter(df, "default_cont", "memory_score", clean_labels = TRUE)
   expect_equal(p$labels$x, "Default-Cont")
-  expect_equal(p$labels$y, "Exemem-Score")
+  expect_equal(p$labels$y, "Memory-Score")
 })
 
 # ==============================================================================
@@ -325,7 +323,10 @@ test_that("plot_scatter works with calc_within output", {
 test_that("plot_scatter works with all options combined", {
   df <- make_scatter_df()
 
-  p <- plot_scatter(df, "ahip_default", "behavior",
+  p <- plot_scatter(
+    df,
+    "ahip_default",
+    "behavior",
     group = "group",
     clean_labels = TRUE,
     title = "Full Options Test"

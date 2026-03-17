@@ -50,10 +50,10 @@
 #' indices <- get_indices(z_mat)
 #' ahip_nets <- calc_conn(z_mat, indices,
 #'   from = "ahip", to = c("default", "cont"))
-#' df <- cbind(ahip_nets, demo[c("group", "exemem")])
+#' df <- cbind(ahip_nets, demo[c("group", "memory")])
 #'
-#' plot_scatter(df, x = "ahip_default", y = "exemem", group = "group",
-#'   title = "AHIP-Default vs Exemplar Memory"
+#' plot_scatter(df, x = "ahip_default", y = "memory", group = "group",
+#'   title = "AHIP-Default Connectivity on Memory"
 #' )
 #' }
 #'

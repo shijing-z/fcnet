@@ -68,9 +68,10 @@
 #' indices <- get_indices(z_mat)
 #'
 #' # Young adults
-#' plot_heatmap(z_mat, indices, subjects = 1:41, title = "Young Adults")
+#' plot_heatmap(z_mat, indices, subjects = demo$group == "YA",
+#'              title = "Young Adults")
 #'
-#' # Older adults using logical vector from demographics
+#' # Older adults
 #' plot_heatmap(z_mat, indices, subjects = demo$group == "OA",
 #'              title = "Older Adults")
 #' }
