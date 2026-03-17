@@ -67,6 +67,13 @@
 #' indices <- get_indices(conn_mats$rmat)
 #' }
 #'
+#' @seealso
+#' \code{\link{load_matrices}} for loading connectivity data.
+#' \code{\link{calc_within}}, \code{\link{calc_between}},
+#'   \code{\link{calc_conn}} for connectivity calculations using indices.
+#' \code{\link{plot_heatmap}} for visualizing connectivity matrices using
+#'   indices.
+#'
 #' @export
 
 get_indices <- function(

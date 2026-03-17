@@ -5,9 +5,9 @@
 #' selected subjects and displays network structure from \code{indices}.
 #'
 #' @param conn_array 3D numeric array of connectivity values with dimensions
-#'   (ROI x ROI x subjects), as returned by \code{\link{load_matrices}}
+#'   (ROI x ROI x subjects)
 #' @param indices Named list of integer vectors mapping network names to ROI
-#'   index positions, as returned by \code{\link{get_indices}}
+#'   index positions
 #' @param subjects Integer or logical vector to subset subjects (third
 #'   dimension). Defaults to all subjects. Logical vectors are converted to
 #'   integer indices internally
@@ -80,8 +80,9 @@
 #' }
 #'
 #' @seealso
+#' \code{\link{plot_compare}} for group comparison bar plots.
+#' \code{\link{plot_scatter}} for connectivity-behavior scatter plots.
 #' \code{\link{get_indices}} for generating the \code{indices} input.
-#' \code{\link{load_matrices}} for loading connectivity data.
 #'
 #' @export
 

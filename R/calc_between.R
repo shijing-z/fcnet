@@ -5,9 +5,9 @@
 #' combinations (all unique network pairs).
 #'
 #' @param conn_array 3D numeric array of connectivity values with dimensions
-#'   (ROI x ROI x subjects), as returned by \code{\link{load_matrices}}
+#'   (ROI x ROI x subjects)
 #' @param indices Named list of integer vectors mapping network names to ROI
-#'   index positions, as returned by \code{\link{get_indices}}
+#'   index positions
 #' @param pairwise Logical. If FALSE (default), returns per-network averages
 #'   (each network vs. all other networks). If TRUE, returns all unique
 #'   pairwise combinations between networks
