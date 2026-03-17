@@ -5,7 +5,11 @@ using parcellated brain atlases. Designed for the Schaefer atlas but
 adaptable to other parcellation schemes.
 
 ![Example 1](man/figures/example1.png)
+*AHIP/PHIP connectivity to 7 networks by age group, generated based on `plot_compare` outputs*
+
 ![Example 2](man/figures/example2.png)
+*Hippocampal connectivity vs. exemplar memory by age group, generated based on `plot_scatter` outputs*
+
 
 ## Installation
 
