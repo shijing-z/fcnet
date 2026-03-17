@@ -33,8 +33,6 @@
 #' averaged with equal weight per cell. This means larger network pairs
 #' contribute proportionally more than smaller pairs.
 #'
-#' Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
-#'
 #' @examples
 #' # Per-network between-network averages
 #' indices <- get_indices(ex_conn_array, roi_include = "schaefer")

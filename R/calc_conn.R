@@ -33,8 +33,6 @@
 #' Names in \code{from} and \code{to} reference entries in \code{indices},
 #' including any manual groupings.
 #'
-#' Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
-#'
 #' @examples
 #' # ROI-to-network
 #' indices <- get_indices(ex_conn_array)

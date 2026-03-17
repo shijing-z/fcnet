@@ -19,8 +19,6 @@
 #' to compute an upper triangle. Use \code{\link{calc_conn}} for single-ROI
 #' connectivity.
 #'
-#' Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
-#'
 #' @examples
 #' # Calculate within-network connectivity
 #' indices <- get_indices(ex_conn_array, roi_include = "schaefer")

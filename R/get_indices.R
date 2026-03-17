@@ -28,8 +28,6 @@
 #' atlas versions (ventatt, salventattn, dorsatt, etc.) are automatically
 #' normalized for consistency.
 #'
-#' Works with any Schaefer version (100-1000 parcels, 7 or 17 networks).
-#'
 #' @examples
 #' # From character vector of ROI names
 #' indices <- get_indices(ex_roi_names)
