@@ -1,4 +1,25 @@
 url: ~
 template:
   bootstrap: 5
-
+reference:
+  - title: Data Loading
+    contents:
+      - load_matrices
+  - title: ROI Organization
+    contents:
+      - get_indices
+  - title: Connectivity Computation
+    contents:
+      - calc_within
+      - calc_between
+      - calc_conn
+  - title: Visualization
+    contents:
+      - plot_heatmap
+      - plot_compare
+      - plot_scatter
+  - title: Example Data
+    contents:
+      - ex_conn_array
+      - ex_roi_names
+      - ex_indices
