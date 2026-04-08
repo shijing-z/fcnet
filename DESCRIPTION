@@ -1,6 +1,6 @@
 Package: fcnet
 Title: Functional Connectivity Analysis Tools for fMRI Data
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     person("Shijing", "Zhou", , "shijingz@uoregon.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7053-0953"))
