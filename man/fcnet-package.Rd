@@ -49,6 +49,13 @@ All functions work with any Schaefer atlas version and support
 non-Schaefer ROIs such as hippocampal subregions.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://shijing-z.github.io/fcnet/}
+}
+
+}
 \author{
 \strong{Maintainer}: Shijing Zhou \email{shijingz@uoregon.edu} (\href{https://orcid.org/0000-0001-7053-0953}{ORCID})
 

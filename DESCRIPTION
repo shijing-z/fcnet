@@ -30,3 +30,4 @@ Imports:
 Depends: 
     R (>= 3.5)
 LazyData: true
+URL: https://shijing-z.github.io/fcnet/

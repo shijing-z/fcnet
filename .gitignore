@@ -52,3 +52,4 @@ tests/.DS_Store
 # Internal files
 data-raw/test_conn.mat
 dev/
+docs
