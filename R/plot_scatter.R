@@ -49,13 +49,26 @@
 #'
 #' The \code{point_args}, \code{line_args}, and \code{band_args} lists
 #' are merged with internal defaults using \code{utils::modifyList()}.
-#' Any valid argument for the underlying geom can be passed. Defaults:
+#' Defaults:
 #' \itemize{
 #'   \item \code{point_args}: \code{list(alpha = 0.6)}
 #'   \item \code{line_args}: \code{list(linewidth = 1)}
 #'   \item \code{band_args}: \code{list(se = TRUE, alpha = 0.2,
 #'     level = 0.95)}
 #' }
+#'
+#' Common \code{point_args} values include \code{size}, \code{shape},
+#' \code{alpha}, and \code{color}. See
+#' \code{\link[ggplot2]{geom_point}} for all options.
+#'
+#' Common \code{line_args} values include \code{linewidth},
+#' \code{linetype}, \code{color}, and \code{method} (e.g.,
+#' \code{"loess"}). See \code{\link[ggplot2]{geom_smooth}} for all
+#' options.
+#'
+#' Band parameters \code{se}, \code{level}, and \code{alpha} must be
+#' passed through \code{band_args}, not \code{line_args}. If found in
+#' \code{line_args}, they are ignored with a warning.
 #'
 #' \code{colors} is a convenience shortcut that applies a uniform color
 #' to all layers. For per-layer control, use \code{color} or \code{fill}
@@ -263,6 +276,18 @@ plot_scatter <- function(
     stop("band_args must be a list.", call. = FALSE)
   }
 
+  # Guard: redirect band parameters found in line_args
+  band_keys <- c("se", "level", "alpha")
+  misplaced <- intersect(names(line_args), band_keys)
+  if (length(misplaced) > 0) {
+    warning(
+      "Band parameter(s) ", paste(misplaced, collapse = ", "),
+      " found in line_args. Use band_args instead. Ignoring.",
+      call. = FALSE
+    )
+    line_args[misplaced] <- NULL
+  }
+
   # Merge user args with defaults
   point_defaults <- list(alpha = 0.6)
   line_defaults <- list(linewidth = 1)
@@ -320,9 +345,7 @@ plot_scatter <- function(
   if (show_line) {
     # Separate se and level from visual args for geom_smooth
     smooth_defaults <- list(
-      method = "lm",
-      se = band_params$se,
-      level = band_params$level
+      method = "lm", se = band_params$se, level = band_params$level
     )
     smooth_params <- utils::modifyList(smooth_defaults, line_params)
 
@@ -350,12 +373,8 @@ plot_scatter <- function(
 
   # Add theme and labels
   plot_labs <- list(x = x_label, y = y_label)
-  if (!is.null(group)) {
-    plot_labs$color <- "Group"
-  }
-  if (!is.null(group) && show_line) {
-    plot_labs$fill <- "Group"
-  }
+  if (!is.null(group)) plot_labs$color <- "Group"
+  if (!is.null(group) && show_line) plot_labs$fill <- "Group"
 
   p <- p +
     do.call(ggplot2::labs, plot_labs) +

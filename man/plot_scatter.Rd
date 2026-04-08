@@ -82,13 +82,26 @@ At least one of \code{show_points} or \code{show_line} must be TRUE.
 
 The \code{point_args}, \code{line_args}, and \code{band_args} lists
 are merged with internal defaults using \code{utils::modifyList()}.
-Any valid argument for the underlying geom can be passed. Defaults:
+Defaults:
 \itemize{
 \item \code{point_args}: \code{list(alpha = 0.6)}
 \item \code{line_args}: \code{list(linewidth = 1)}
 \item \code{band_args}: \code{list(se = TRUE, alpha = 0.2,
     level = 0.95)}
 }
+
+Common \code{point_args} values include \code{size}, \code{shape},
+\code{alpha}, and \code{color}. See
+\code{\link[ggplot2]{geom_point}} for all options.
+
+Common \code{line_args} values include \code{linewidth},
+\code{linetype}, \code{color}, and \code{method} (e.g.,
+\code{"loess"}). See \code{\link[ggplot2]{geom_smooth}} for all
+options.
+
+Band parameters \code{se}, \code{level}, and \code{alpha} must be
+passed through \code{band_args}, not \code{line_args}. If found in
+\code{line_args}, they are ignored with a warning.
 
 \code{colors} is a convenience shortcut that applies a uniform color
 to all layers. For per-layer control, use \code{color} or \code{fill}

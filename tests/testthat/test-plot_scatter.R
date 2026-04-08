@@ -487,6 +487,43 @@ test_that("plot_scatter passes line_args to geom_smooth", {
   expect_equal(smooth_layer$aes_params$linewidth, 2)
 })
 
+test_that("plot_scatter warns when band params are in line_args", {
+  df <- make_scatter_df()
+
+  expect_warning(
+    plot_scatter(df, "ahip_default", "behavior",
+      line_args = list(se = FALSE)
+    ),
+    "band_args"
+  )
+
+  expect_warning(
+    plot_scatter(df, "ahip_default", "behavior",
+      line_args = list(alpha = 0.5, level = 0.99)
+    ),
+    "band_args"
+  )
+})
+
+test_that("plot_scatter ignores misplaced band params in line_args", {
+  df <- make_scatter_df()
+
+  p <- suppressWarnings(
+    plot_scatter(df, "ahip_default", "behavior",
+      line_args = list(se = FALSE, linetype = "dashed")
+    )
+  )
+
+  smooth_layer <- p$layers[[which(
+    vapply(p$layers, function(l) class(l$geom)[1], character(1)) == "GeomSmooth"
+  )]]
+
+  # se should be TRUE (default from band_args), not FALSE from line_args
+  expect_true(smooth_layer$stat_params$se)
+  # linetype should still be applied
+  expect_equal(smooth_layer$aes_params$linetype, "dashed")
+})
+
 # ==============================================================================
 # Band Args Tests
 # ==============================================================================
