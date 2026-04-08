@@ -56,7 +56,7 @@ head(pairwise)
 
 \dontrun{
 # Full workflow
-z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
+z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(3, 5))
 indices <- get_indices(z_mat, roi_include = "schaefer")
 between <- calc_between(z_mat, indices)
 pairwise <- calc_between(z_mat, indices, pairwise = TRUE)

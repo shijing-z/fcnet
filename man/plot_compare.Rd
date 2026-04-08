@@ -93,7 +93,7 @@ plot_compare(within_df,
 
 \dontrun{
 # Full workflow with real data
-z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
+z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(3, 5))
 indices <- get_indices(z_mat, roi_include = "schaefer")
 within_df <- calc_within(z_mat, indices)
 within_df$group <- demo$group

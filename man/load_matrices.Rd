@@ -42,7 +42,7 @@ dim(vis_connectivity)
 z_mat <- load_matrices(
   mat_file = "data/conn.mat",
   type = "zmat",
-  exclude = c(46, 57)
+  exclude = c(3, 5)
 )
 
 # Load correlation matrices

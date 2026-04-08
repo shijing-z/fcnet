@@ -62,7 +62,7 @@ ahip_phip <- calc_conn(ex_conn_array, indices,
 
 \dontrun{
 # Full workflow with manual grouping
-z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
+z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(3, 5))
 indices <- get_indices(z_mat,
   manual_assignments = list(ahip = "hippocampus", phip = "hippocampus"))
 
