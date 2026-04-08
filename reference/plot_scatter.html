@@ -146,11 +146,21 @@ group.</p>
 <p>At least one of <code>show_points</code> or <code>show_line</code> must be TRUE.</p>
 <p>The <code>point_args</code>, <code>line_args</code>, and <code>band_args</code> lists
 are merged with internal defaults using <code><a href="https://rdrr.io/r/utils/modifyList.html" class="external-link">utils::modifyList()</a></code>.
-Any valid argument for the underlying geom can be passed. Defaults:</p><ul><li><p><code>point_args</code>: <code>list(alpha = 0.6)</code></p></li>
+Defaults:</p><ul><li><p><code>point_args</code>: <code>list(alpha = 0.6)</code></p></li>
 <li><p><code>line_args</code>: <code>list(linewidth = 1)</code></p></li>
 <li><p><code>band_args</code>: <code>list(se = TRUE, alpha = 0.2,
     level = 0.95)</code></p></li>
-</ul><p><code>colors</code> is a convenience shortcut that applies a uniform color
+</ul><p>Common <code>point_args</code> values include <code>size</code>, <code>shape</code>,
+<code>alpha</code>, and <code>color</code>. See
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></code> for all options.</p>
+<p>Common <code>line_args</code> values include <code>linewidth</code>,
+<code>linetype</code>, <code>color</code>, and <code>method</code> (e.g.,
+<code>"loess"</code>). See <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></code> for all
+options.</p>
+<p>Band parameters <code>se</code>, <code>level</code>, and <code>alpha</code> must be
+passed through <code>band_args</code>, not <code>line_args</code>. If found in
+<code>line_args</code>, they are ignored with a warning.</p>
+<p><code>colors</code> is a convenience shortcut that applies a uniform color
 to all layers. For per-layer control, use <code>color</code> or <code>fill</code>
 inside the <code>*_args</code> lists instead. When both are specified,
 <code>*_args</code> takes precedence over <code>colors</code>.</p>

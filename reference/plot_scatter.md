@@ -105,14 +105,28 @@ At least one of `show_points` or `show_line` must be TRUE.
 
 The `point_args`, `line_args`, and `band_args` lists are merged with
 internal defaults using
-[`utils::modifyList()`](https://rdrr.io/r/utils/modifyList.html). Any
-valid argument for the underlying geom can be passed. Defaults:
+[`utils::modifyList()`](https://rdrr.io/r/utils/modifyList.html).
+Defaults:
 
 - `point_args`: `list(alpha = 0.6)`
 
 - `line_args`: `list(linewidth = 1)`
 
 - `band_args`: `list(se = TRUE, alpha = 0.2, level = 0.95)`
+
+Common `point_args` values include `size`, `shape`, `alpha`, and
+`color`. See
+[`geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html)
+for all options.
+
+Common `line_args` values include `linewidth`, `linetype`, `color`, and
+`method` (e.g., `"loess"`). See
+[`geom_smooth`](https://ggplot2.tidyverse.org/reference/geom_smooth.html)
+for all options.
+
+Band parameters `se`, `level`, and `alpha` must be passed through
+`band_args`, not `line_args`. If found in `line_args`, they are ignored
+with a warning.
 
 `colors` is a convenience shortcut that applies a uniform color to all
 layers. For per-layer control, use `color` or `fill` inside the `*_args`
