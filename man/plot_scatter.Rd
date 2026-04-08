@@ -4,7 +4,20 @@
 \alias{plot_scatter}
 \title{Plot connectivity-behavior scatter}
 \usage{
-plot_scatter(data, x, y, group = NULL, clean_labels = TRUE, title = NULL)
+plot_scatter(
+  data,
+  x,
+  y,
+  group = NULL,
+  colors = NULL,
+  show_points = TRUE,
+  show_line = TRUE,
+  point_args = list(),
+  line_args = list(),
+  band_args = list(),
+  clean_labels = TRUE,
+  title = NULL
+)
 }
 \arguments{
 \item{data}{Data frame with one row per subject containing connectivity
@@ -17,8 +30,32 @@ connectivity variable)}
 behavioral or outcome variable)}
 
 \item{group}{Optional character string naming a grouping column. When
-provided, plots per-group regression lines. When NULL (default),
-plots a single regression line}
+provided, maps groups to color. When NULL (default), plots a single
+set of geoms}
+
+\item{colors}{Optional color specification. When \code{group} is
+provided, a named character vector mapping group levels to colors
+(e.g., \code{c("YA" = "steelblue", "OA" = "coral")}). When
+\code{group} is NULL, a single color string applied to all geoms
+(e.g., \code{"steelblue"})}
+
+\item{show_points}{Logical. If TRUE (default), display scatter points}
+
+\item{show_line}{Logical. If TRUE (default), display linear regression
+lines with confidence bands}
+
+\item{point_args}{Named list of additional arguments passed to
+\code{\link[ggplot2]{geom_point}}. Overrides defaults
+(\code{alpha = 0.6}). See Details}
+
+\item{line_args}{Named list of additional arguments passed to
+\code{\link[ggplot2]{geom_smooth}} controlling the regression line.
+Overrides defaults (\code{linewidth = 1}). See Details}
+
+\item{band_args}{Named list of additional arguments controlling the
+confidence band. Supports \code{se} (logical, default TRUE),
+\code{level} (numeric, default 0.95), and \code{alpha} (numeric,
+default 0.2). See Details}
 
 \item{clean_labels}{Logical. If TRUE (default), clean column names for
 axis display by replacing underscores with hyphens and applying title
@@ -31,13 +68,38 @@ A \code{ggplot} object that can be further customized with
 standard ggplot2 syntax.
 }
 \description{
-Create scatter plots with linear regression lines for exploring
-connectivity-behavior relationships.
+Create scatter plots with optional linear regression lines for exploring
+connectivity-behavior relationships. Points, regression lines, and
+confidence bands can be toggled on or off, and their appearance can be
+customized through list arguments.
 }
 \details{
-Regression lines are fitted with \code{geom_smooth(method = "lm")} and
-include a shaded 95 percent confidence band. When \code{group} is
-provided, separate lines are fitted for each group.
+Regression lines are fitted with \code{geom_smooth(method = "lm")}.
+When \code{group} is provided, separate lines are fitted for each
+group.
+
+At least one of \code{show_points} or \code{show_line} must be TRUE.
+
+The \code{point_args}, \code{line_args}, and \code{band_args} lists
+are merged with internal defaults using \code{utils::modifyList()}.
+Any valid argument for the underlying geom can be passed. Defaults:
+\itemize{
+\item \code{point_args}: \code{list(alpha = 0.6)}
+\item \code{line_args}: \code{list(linewidth = 1)}
+\item \code{band_args}: \code{list(se = TRUE, alpha = 0.2,
+    level = 0.95)}
+}
+
+\code{colors} is a convenience shortcut that applies a uniform color
+to all layers. For per-layer control, use \code{color} or \code{fill}
+inside the \code{*_args} lists instead. When both are specified,
+\code{*_args} takes precedence over \code{colors}.
+
+For grouped plots where points and bands need different shades per
+group, override the scales directly with standard ggplot2 syntax:
+\preformatted{plot_scatter(df, x = "x", y = "y", group = "group") +
+  scale_color_manual(values = c("YA" = "navy", "OA" = "darkred")) +
+  scale_fill_manual(values = c("YA" = "lightblue", "OA" = "lightsalmon"))}
 
 Axis labels can always be overridden with \code{+ labs(x = ..., y = ...)}
 regardless of the \code{clean_labels} setting.
@@ -52,21 +114,67 @@ ahip_df$behavior <- rnorm(10)
 
 plot_scatter(ahip_df, x = "ahip_default", y = "behavior")
 
+# Ungrouped with a single color
+plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
+  colors = "steelblue"
+)
+
 # Grouped scatter
 ahip_df$group <- rep(c("YA", "OA"), times = c(5, 5))
 plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
   group = "group"
 )
 
+# Custom group colors
+plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
+  group = "group",
+  colors = c("YA" = "steelblue", "OA" = "coral")
+)
+
+# Lines and bands only (no points)
+plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
+  group = "group",
+  show_points = FALSE,
+  colors = c("YA" = "steelblue", "OA" = "coral")
+)
+
+# Points only (no line or band)
+plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
+  group = "group",
+  show_line = FALSE,
+  point_args = list(size = 3, alpha = 0.8)
+)
+
+# Custom line style and wider confidence band
+plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
+  group = "group",
+  line_args = list(linetype = "dashed"),
+  band_args = list(alpha = 0.3, level = 0.99)
+)
+
+# Disable confidence band
+plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
+  group = "group",
+  band_args = list(se = FALSE)
+)
+
+# Different colors for points, line, and band
+plot_scatter(ahip_df, x = "ahip_default", y = "behavior",
+  point_args = list(color = "steelblue"),
+  line_args = list(color = "coral", fill = "grey80")
+)
+
 \dontrun{
 # Full workflow with real data
-z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(46, 57))
+z_mat <- load_matrices("data/conn.mat", type = "zmat", exclude = c(3, 5))
 indices <- get_indices(z_mat)
 ahip_nets <- calc_conn(z_mat, indices,
   from = "ahip", to = c("default", "cont"))
 df <- cbind(ahip_nets, demo[c("group", "memory")])
 
 plot_scatter(df, x = "ahip_default", y = "memory", group = "group",
+  colors = c("YA" = "steelblue", "OA" = "coral"),
+  point_args = list(size = 2, shape = 17),
   title = "AHIP-Default Connectivity on Memory"
 )
 }
