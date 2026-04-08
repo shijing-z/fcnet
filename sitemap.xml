@@ -1,0 +1,25 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://shijing-z.github.io/fcnet/404.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/LICENSE-text.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/LICENSE.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/authors.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/index.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/calc_between.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/calc_conn.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/calc_within.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/ex_conn_array.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/ex_indices.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/ex_roi_names.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/extract_schaefer_networks.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/fcnet-package.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/get_indices.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/index.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/load_matrices.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/normalize_attention_networks.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/plot_compare.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/plot_heatmap.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/plot_scatter.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/prettify_network_names.html</loc></url>
+<url><loc>https://shijing-z.github.io/fcnet/reference/reorder_network_list.html</loc></url>
+</urlset>
+
